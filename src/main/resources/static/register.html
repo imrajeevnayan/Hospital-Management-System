@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - HealthCare Pro</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif']
+                    },
+                    colors: {
+                        primary: {
+                            50: '#EBF3FF',
+                            500: '#3B82F6',
+                            700: '#1D4ED8'
+                        },
+                        neutral: {
+                            50: '#F8F9FA',
+                            100: '#FFFFFF',
+                            300: '#E5E7EB',
+                            600: '#4B5563',
+                            900: '#111827'
+                        },
+                        success: {
+                            500: '#10B981'
+                        },
+                        warning: {
+                            500: '#F59E0B'
+                        },
+                        error: {
+                            500: '#EF4444'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .shadow-card { box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); }
+        .shadow-card-hover { box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1); }
+    </style>
+</head>
+<body class="bg-neutral-50 font-sans text-neutral-900 min-h-screen">
+<!-- Navigation -->
+<nav class="bg-neutral-100 shadow-sm fixed top-0 left-0 right-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between h-16">
+            <div class="flex items-center">
+                <a href="index.html" class="flex-shrink-0 flex items-center">
+                    <svg class="h-8 w-8 text-primary-500" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M4 4a2 2 0 00-2 2v1h16V6a2 2 0 00-2-2H4zM18 9H2v5a2 2 0 002 2h12a2 2 0 002-2V9zM4 13a1 1 0 011-1h1a1 1 0 110 2H5a1 1 0 01-1-1zm5-1a1 1 0 100 2h1a1 1 0 100-2H9z"/>
+                    </svg>
+                    <span class="ml-2 text-xl font-bold text-neutral-900">HealthCare Pro</span>
+                </a>
+            </div>
+            <div class="flex items-center">
+                <a href="index.html" class="text-neutral-600 hover:text-neutral-900 px-3 py-2 text-sm font-medium">Home</a>
+                <a href="login.html" class="text-primary-500 hover:text-primary-700 px-3 py-2 text-sm font-medium">Sign In</a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<!-- Registration Form -->
+<div class="pt-24 pb-12 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-2xl mx-auto">
+        <div class="text-center mb-8">
+            <h1 class="text-3xl font-bold text-neutral-900">Create your account</h1>
+            <p class="mt-2 text-neutral-600">Join thousands of healthcare professionals using HealthCare Pro</p>
+        </div>
+
+        <div class="bg-neutral-100 rounded-xl p-8 shadow-card">
+            <form class="space-y-6" id="registerForm">
+                <!-- Role Selection -->
+                <div>
+                    <label class="block text-sm font-medium text-neutral-900 mb-4">I am registering as a:</label>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+                        <label class="role-option">
+                            <input type="radio" name="role" value="patient" class="sr-only" checked>
+                            <div class="role-card border-2 border-primary-500 bg-primary-50 cursor-pointer p-4 rounded-xl text-center">
+                                <div class="w-8 h-8 bg-success-500 rounded-full flex items-center justify-center mx-auto mb-2">
+                                    <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                    </svg>
+                                </div>
+                                <p class="text-sm font-medium text-neutral-900">Patient</p>
+                            </div>
+                        </label>
+
+                        <label class="role-option">
+                            <input type="radio" name="role" value="doctor" class="sr-only">
+                            <div class="role-card border-2 border-neutral-300 hover:border-primary-500 cursor-pointer p-4 rounded-xl text-center transition-colors">
+                                <div class="w-8 h-8 bg-primary-500 rounded-full flex items-center justify-center mx-auto mb-2">
+                                    <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z"/>
+                                    </svg>
+                                </div>
+                                <p class="text-sm font-medium text-neutral-900">Doctor</p>
+                            </div>
+                        </label>
+
+                        <label class="role-option">
+                            <input type="radio" name="role" value="nurse" class="sr-only">
+                            <div class="role-card border-2 border-neutral-300 hover:border-primary-500 cursor-pointer p-4 rounded-xl text-center transition-colors">
+                                <div class="w-8 h-8 bg-warning-500 rounded-full flex items-center justify-center mx-auto mb-2">
+                                    <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z"/>
+                                    </svg>
+                                </div>
+                                <p class="text-sm font-medium text-neutral-900">Nurse</p>
+                            </div>
+                        </label>
+
+                        <label class="role-option">
+                            <input type="radio" name="role" value="admin" class="sr-only">
+                            <div class="role-card border-2 border-neutral-300 hover:border-primary-500 cursor-pointer p-4 rounded-xl text-center transition-colors">
+                                <div class="w-8 h-8 bg-error-500 rounded-full flex items-center justify-center mx-auto mb-2">
+                                    <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3z"/>
+                                    </svg>
+                                </div>
+                                <p class="text-sm font-medium text-neutral-900">Admin</p>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Basic Information -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label for="firstName" class="block text-sm font-medium text-neutral-900 mb-2">First Name</label>
+                        <input id="firstName" name="firstName" type="text" required
+                               class="w-full px-4 py-3 bg-neutral-100 border border-neutral-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors duration-200"
+                               placeholder="Enter your first name">
+                    </div>
+                    <div>
+                        <label for="lastName" class="block text-sm font-medium text-neutral-900 mb-2">Last Name</label>
+                        <input id="lastName" name="lastName" type="text" required
+                               class="w-full px-4 py-3 bg-neutral-100 border border-neutral-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors duration-200"
+                               placeholder="Enter your last name">
+                    </div>
+                </div>
+
+                <div>
+                    <label for="email" class="block text-sm font-medium text-neutral-900 mb-2">Email Address</label>
+                    <input id="email" name="email" type="email" required
+                           class="w-full px-4 py-3 bg-neutral-100 border border-neutral-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors duration-200"
+                           placeholder="Enter your email address">
+                </div>
+
+                <div>
+                    <label for="phone" class="block text-sm font-medium text-neutral-900 mb-2">Phone Number</label>
+                    <input id="phone" name="phone" type="tel" required
+                           class="w-full px-4 py-3 bg-neutral-100 border border-neutral-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors duration-200"
+                           placeholder="Enter your phone number">
+                </div>
+
+                <!-- Role-specific fields will be shown here -->
+                <div id="roleFields"></div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label for="password" class="block text-sm font-medium text-neutral-900 mb-2">Password</label>
+                        <input id="password" name="password" type="password" required
+                               class="w-full px-4 py-3 bg-neutral-100 border border-neutral-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors duration-200"
+                               placeholder="Create a password">
+                    </div>
+                    <div>
+                        <label for="confirmPassword" class="block text-sm font-medium text-neutral-900 mb-2">Confirm Password</label>
+                        <input id="confirmPassword" name="confirmPassword" type="password" required
+                               class="w-full px-4 py-3 bg-neutral-100 border border-neutral-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors duration-200"
+                               placeholder="Confirm your password">
+                    </div>
+                </div>
+
+                <div class="flex items-center">
+                    <input id="agreeTerms" name="agreeTerms" type="checkbox" required
+                           class="h-4 w-4 text-primary-500 focus:ring-primary-500 border-neutral-300 rounded">
+                    <label for="agreeTerms" class="ml-2 block text-sm text-neutral-600">
+                        I agree to the <a href="#" class="text-primary-500 hover:text-primary-700">Terms of Service</a> and <a href="#" class="text-primary-500 hover:text-primary-700">Privacy Policy</a>
+                    </label>
+                </div>
+
+                <div>
+                    <button type="submit"
+                            class="w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-xl text-white bg-primary-500 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transform hover:scale-105 transition-all duration-200">
+                        Create Account
+                    </button>
+                </div>
+            </form>
+
+            <div class="mt-6 text-center">
+                <p class="text-sm text-neutral-600">
+                    Already have an account?
+                    <a href="login.html" class="font-medium text-primary-500 hover:text-primary-700">Sign in here</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Check URL parameters for role selection
+    const urlParams = new URLSearchParams(window.location.search);
+    const selectedRole = urlParams.get('role');
+
+    // Role-specific form fields
+    const roleFields = {
+        patient: `
+            <div class="space-y-6">
+                <div>
+                    <label for="dateOfBirth" class="block text-sm font-medium text-neutral-900 mb-2">Date of Birth</label>
+                    <input id="dateOfBirth" name="dateOfBirth" type="date"
+                           class="w-full px-4 py-3 bg-neutral-100 border border-neutral-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors duration-200">
+                </div>
+                <div>
+                    <label for="address" class="block text-sm font-medium text-neutral-900 mb-2">Address</label>
+                    <textarea id="address" name="address" rows="3"
+                              class="w-full px-4 py-3 bg-neutral-100 border border-neutral-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors duration-200"
+                              placeholder="Enter your address"></textarea>
+                </div>
+                <div>
+                    <label for="medicalHistory" class="block text-sm font-medium text-neutral-900 mb-2">Medical History (Optional)</label>
+                    <textarea id="medicalHistory" name="medicalHistory" rows="4"
+                              class="w-full px-4 py-3 bg-neutral-100 border border-neutral-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors duration-200"
+                              placeholder="Any known allergies, conditions, or medications"></textarea>
+                </div>
+            </div>
+        `,
+        doctor: `
+            <div class="space-y-6">
+                <div>
+                    <label for="specialization" class="block text-sm font-medium text-neutral-900 mb-2">Specialization</label>
+                    <select id="specialization" name="specialization" required
+                            class="w-full px-4 py-3 bg-neutral-100 border border-neutral-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors duration-200">
+                        <option value="">Select specialization</option>
+                        <option value="cardiology">Cardiology</option>
+                        <option value="neurology">Neurology</option>
+                        <option value="pediatrics">Pediatrics</option>
+                        <option value="orthopedics">Orthopedics</option>
+                        <option value="oncology">Oncology</option>
+                        <option value="dermatology">Dermatology</option>
+                        <option value="psychiatry">Psychiatry</option>
+                        <option value="general">General Practice</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="licenseNumber" class="block text-sm font-medium text-neutral-900 mb-2">Medical License Number</label>
+                    <input id="licenseNumber" name="licenseNumber" type="text" required
+                           class="w-full px-4 py-3 bg-neutral-100 border border-neutral-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors duration-200"
+                           placeholder="Enter your medical license number">
+                </div>
+                <div>
+                    <label for="experience" class="block text-sm font-medium text-neutral-900 mb-2">Years of Experience</label>
+                    <input id="experience" name="experience" type="number" min="0" max="50"
+                           class="w-full px-4 py-3 bg-neutral-100 border border-neutral-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors duration-200"
+                           placeholder="Years of professional experience">
+                </div>
+            </div>
+        `,
+        nurse: `
+            <div class="space-y-6">
+                <div>
+                    <label for="department" class="block text-sm font-medium text-neutral-900 mb-2">Department</label>
+                    <select id="department" name="department" required
+                            class="w-full px-4 py-3 bg-neutral-100 border border-neutral-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors duration-200">
+                        <option value="">Select department</option>
+                        <option value="emergency">Emergency</option>
+                        <option value="icu">ICU</option>
+                        <option value="surgery">Surgery</option>
+                        <option value="pediatrics">Pediatrics</option>
+                        <option value="oncology">Oncology</option>
+                        <option value="cardiology">Cardiology</option>
+                        <option value="general">General Ward</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="nursingLicense" class="block text-sm font-medium text-neutral-900 mb-2">Nursing License Number</label>
+                    <input id="nursingLicense" name="nursingLicense" type="text" required
+                           class="w-full px-4 py-3 bg-neutral-100 border border-neutral-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors duration-200"
+                           placeholder="Enter your nursing license number">
+                </div>
+                <div>
+                    <label for="certifications" class="block text-sm font-medium text-neutral-900 mb-2">Certifications (Optional)</label>
+                    <input id="certifications" name="certifications" type="text"
+                           class="w-full px-4 py-3 bg-neutral-100 border border-neutral-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors duration-200"
+                           placeholder="e.g., CPR, ACLS, PALS">
+                </div>
+            </div>
+        `,
+        admin: `
+            <div class="space-y-6">
+                <div>
+                    <label for="adminLevel" class="block text-sm font-medium text-neutral-900 mb-2">Administrative Level</label>
+                    <select id="adminLevel" name="adminLevel" required
+                            class="w-full px-4 py-3 bg-neutral-100 border border-neutral-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors duration-200">
+                        <option value="">Select level</option>
+                        <option value="super">Super Administrator</option>
+                        <option value="hospital">Hospital Administrator</option>
+                        <option value="department">Department Manager</option>
+                        <option value="staff">Staff Coordinator</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="employeeId" class="block text-sm font-medium text-neutral-900 mb-2">Employee ID</label>
+                    <input id="employeeId" name="employeeId" type="text" required
+                           class="w-full px-4 py-3 bg-neutral-100 border border-neutral-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors duration-200"
+                           placeholder="Enter your employee ID">
+                </div>
+                <div>
+                    <label for="department" class="block text-sm font-medium text-neutral-900 mb-2">Department</label>
+                    <select id="department" name="department" required
+                            class="w-full px-4 py-3 bg-neutral-100 border border-neutral-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors duration-200">
+                        <option value="">Select department</option>
+                        <option value="administration">Administration</option>
+                        <option value="it">Information Technology</option>
+                        <option value="finance">Finance</option>
+                        <option value="hr">Human Resources</option>
+                        <option value="operations">Operations</option>
+                    </select>
+                </div>
+            </div>
+        `
+    };
+
+    // Initialize role selection
+    function initRoleSelection() {
+        // Set default role from URL parameter
+        if (selectedRole && roleFields[selectedRole]) {
+            document.querySelector(`input[value="${selectedRole}"]`).checked = true;
+            updateRoleFields(selectedRole);
+        } else {
+            updateRoleFields('patient');
+        }
+
+        // Add click handlers to role cards
+        document.querySelectorAll('input[name="role"]').forEach(radio => {
+            radio.addEventListener('change', (e) => {
+                updateRoleFields(e.target.value);
+            });
+        });
+    }
+
+    function updateRoleFields(role) {
+        const fieldsContainer = document.getElementById('roleFields');
+        fieldsContainer.innerHTML = roleFields[role] || '';
+
+        // Update visual state of role cards
+        document.querySelectorAll('.role-card').forEach(card => {
+            card.className = 'role-card border-2 border-neutral-300 hover:border-primary-500 cursor-pointer p-4 rounded-xl text-center transition-colors';
+        });
+
+        // Highlight selected role
+        const selectedCard = document.querySelector(`input[value="${role}"]`).closest('.role-option').querySelector('.role-card');
+        selectedCard.className = 'role-card border-2 border-primary-500 bg-primary-50 cursor-pointer p-4 rounded-xl text-center';
+    }
+
+    // Form submission
+    document.getElementById('registerForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const formData = new FormData(this);
+        const data = Object.fromEntries(formData.entries());
+
+        // Basic validation
+        if (data.password !== data.confirmPassword) {
+            alert('Passwords do not match');
+            return;
+        }
+
+        if (!data.agreeTerms) {
+            alert('Please agree to the terms and conditions');
+            return;
+        }
+
+        // Simulate registration
+        const submitBtn = document.querySelector('button[type="submit"]');
+        const originalText = submitBtn.textContent;
+        submitBtn.textContent = 'Creating Account...';
+        submitBtn.disabled = true;
+
+        setTimeout(() => {
+            // Store user data
+            const userData = {
+                ...data,
+                loggedIn: true,
+                registrationTime: new Date().toISOString()
+            };
+
+            localStorage.setItem('hms_user', JSON.stringify(userData));
+
+            // Redirect to appropriate dashboard
+            const dashboardUrls = {
+                'patient': 'patient-dashboard.html',
+                'doctor': 'doctor-dashboard.html',
+                'nurse': 'nurse-dashboard.html',
+                'admin': 'admin-dashboard.html'
+            };
+
+            window.location.href = dashboardUrls[data.role];
+        }, 2000);
+    });
+
+    // Initialize on page load
+    document.addEventListener('DOMContentLoaded', initRoleSelection);
+</script>
+
+<style>
+    .role-card {
+        transition: all 0.2s ease-in-out;
+    }
+
+    .role-card:hover {
+        transform: translateY(-2px);
+    }
+</style>
+</body>
+</html>

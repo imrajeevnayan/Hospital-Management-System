@@ -15,7 +15,11 @@ public class HomeController {
     public String home() {
         return "login";
     }
-    
+    @GetMapping("/index")
+    public String index(){
+        return "index";
+    }
+
     @GetMapping("/register")
     public String register() {
         return "register";
@@ -32,7 +36,6 @@ public class HomeController {
             return "redirect:/login";
         }
         
-        // Redirect to appropriate dashboard based on user role
         String role = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .map(auth -> auth.replace("ROLE_", ""))

@@ -12,10 +12,10 @@ public class HospitalManagementSystemApplication {
         SpringApplication.run(HospitalManagementSystemApplication.class, args);
         System.out.println("\n🏥 Hospital Management System Started Successfully!");
         System.out.println("🌐 Access the application at: http://localhost:8080");
-        System.out.println("👥 Demo Accounts:");
-        System.out.println("   Patient: patient@hms.com / password");
-        System.out.println("   Doctor: doctor@hms.com / password");
-        System.out.println("   Nurse: nurse@hms.com / password");
-        System.out.println("   Admin: admin@hms.com / password");
+//        System.out.println("👥 Demo Accounts:");
+//        System.out.println("   Patient: patient@hms.com / password");
+//        System.out.println("   Doctor: doctor@hms.com / password");
+//        System.out.println("   Nurse: nurse@hms.com / password");
+//        System.out.println("   Admin: admin@hms.com / password");
     }
 }

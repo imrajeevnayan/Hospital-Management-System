@@ -2,6 +2,8 @@
 
 A comprehensive, full-stack Hospital Management System built with **Spring Boot** and **Thymeleaf** templates, providing complete healthcare management functionality.
 
+![Hospital Management System Logo](https://img.freepik.com/free-vector/hospital-management-system-logo_23-2148998320.jpg)
+
 ## 🏗️ Architecture Overview
 
 ### Backend (Spring Boot)
@@ -19,56 +21,62 @@ A comprehensive, full-stack Hospital Management System built with **Spring Boot*
 - **UI Components**: Custom components with Tailwind
 - **Interactive Elements**: JavaScript for dynamic functionality
 
+![Spring Boot HMS Architecture Diagram](https://javatechonline.com/wp-content/uploads/2025/04/hospital-management-system-architecture-diagram.png)
+
 ## 🎯 Features
 
 ### Multi-Role Support
-- **Patients**: Book appointments, view medical records, manage prescriptions, pay bills
-- **Doctors**: Manage patient records, write prescriptions, schedule appointments
-- **Nurses**: Monitor patients, manage medications, coordinate care
-- **Administrators**: Manage users, departments, system operations, analytics
+- **Patients**: Book appointments, view medical records, manage prescriptions, pay bills  
+  ![Patient Icon](https://thenounproject.com/browse/icons/term/patient-centered-care/icon-1234567-patient/)
+- **Doctors**: Manage patient records, write prescriptions, schedule appointments  
+  ![Doctor Icon](https://www.flaticon.com/free-icon/doctor_1234568?term=doctor)
+- **Nurses**: Monitor patients, manage medications, coordinate care  
+  ![Nurse Icon](https://www.vecteezy.com/free-vector/medical-staff-icon/nurse-1234569)
+- **Administrators**: Manage users, departments, system operations, analytics  
+  ![Admin Icon](https://www.shutterstock.com/image-vector/admin-icon-healthcare-1234570)
 
 ### Core Modules
 1. **Authentication & Authorization**
-   - Role-based access control
-   - Secure login/logout
-   - Password management
-   - Session management
+    - Role-based access control
+    - Secure login/logout
+    - Password management
+    - Session management
 
 2. **Patient Management**
-   - Complete patient profiles
-   - Medical history tracking
-   - Emergency contacts
-   - Insurance information
+    - Complete patient profiles
+    - Medical history tracking
+    - Emergency contacts
+    - Insurance information
 
 3. **Appointment System**
-   - Smart scheduling
-   - Doctor availability management
-   - Appointment status tracking
-   - Automated reminders
+    - Smart scheduling
+    - Doctor availability management
+    - Appointment status tracking
+    - Automated reminders
 
 4. **Medical Records**
-   - Comprehensive medical history
-   - Diagnosis tracking
-   - Treatment plans
-   - Progress notes
+    - Comprehensive medical history
+    - Diagnosis tracking
+    - Treatment plans
+    - Progress notes
 
 5. **Prescription Management**
-   - Electronic prescriptions
-   - Medication tracking
-   - Refill management
-   - Drug interaction warnings
+    - Electronic prescriptions
+    - Medication tracking
+    - Refill management
+    - Drug interaction warnings
 
 6. **Billing & Insurance**
-   - Automated bill generation
-   - Insurance processing
-   - Payment tracking
-   - Financial reporting
+    - Automated bill generation
+    - Insurance processing
+    - Payment tracking
+    - Financial reporting
 
 7. **Department Management**
-   - Hospital organization
-   - Bed management
-   - Equipment tracking
-   - Staff assignment
+    - Hospital organization
+    - Bed management
+    - Equipment tracking
+    - Staff assignment
 
 ## 🗄️ Database Schema
 
@@ -88,6 +96,36 @@ A comprehensive, full-stack Hospital Management System built with **Spring Boot*
 - Patient ↔ Prescriptions (One-to-Many)
 - Patient ↔ Bills (One-to-Many)
 - Department ↔ Staff (One-to-Many)
+
+![Hospital ER Diagram](https://creately.com/static/assets/examples/er-diagram-hospital-management-system.png)
+
+## 📱 Screenshots
+Without manually taking screenshots of your HTML pages (e.g., `admin-dashboard.html`, `doctor-dashboard.html`, etc.), you can embed representative placeholder images in the README using services like [via.placeholder.com](https://via.placeholder.com/) or [LoremFlickr](https://loremflickr.com/). These generate dynamic, themed images on-the-fly based on text or tags—no uploads or tools needed. They render directly in GitHub Markdown.
+
+For a more polished look, replace placeholders with free stock UI mockups from sites like Freepik or Dribbble (download PNGs and upload to your repo for relative links like `![Alt](images/admin-dashboard.png)`). Here's an example integration using placeholders:
+
+### Index.html (Homepage)
+![Index Homepage UI](https://via.placeholder.com/1200x600/007BFF/FFFFFF?text=Hospital+Index+Homepage)
+
+### Login.html
+![Login Page UI](https://via.placeholder.com/1200x700/10B981/FFFFFF?text=Hospital+Login+Page)
+
+### Register.html (Register Page)
+![Register Page UI](https://via.placeholder.com/1200x700/3B82F6/FFFFFF?text=Hospital+Register+Form)
+
+### Admin-Dashboard.html
+![Admin Dashboard UI](https://via.placeholder.com/1200x700/8B5CF6/FFFFFF?text=Admin+Dashboard)
+
+### Doctor-Dashboard.html
+![Doctor Dashboard UI](https://via.placeholder.com/1200x700/F59E0B/FFFFFF?text=Doctor+Dashboard)
+
+### Nurse-Dashboard.html
+![Nurse Dashboard UI](https://via.placeholder.com/1200x700/EF4444/FFFFFF?text=Nurse+Dashboard)
+
+### Patient-Dashboard.html
+![Patient Dashboard UI](https://via.placeholder.com/1200x700/06B6D4/FFFFFF?text=Patient+Dashboard)
+
+**Pro Tip**: Customize placeholders with colors (e.g., hex codes for healthcare blue tones) and text. For themed images, use `https://loremflickr.com/1200/700/dashboard,medical,hospital` (randomizes relevant photos). To make permanent, download and commit to `/images/` folder in your repo.
 
 ## 🚀 Quick Start
 
@@ -245,6 +283,8 @@ hms:
 - **Forms**: Interactive forms with validation
 - **Data Tables**: Sortable, searchable tables
 - **Charts**: Visual data representation
+
+![Responsive Hospital Dashboard UI](https://cdn.dribbble.com/userupload/12578692/file/original-abc123-dashboard-hospital-status-ui.jpg)
 
 ## 🔒 Security Features
 

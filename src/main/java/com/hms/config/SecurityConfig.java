@@ -53,7 +53,7 @@ public class SecurityConfig {
             )
             .authorizeHttpRequests(authorize -> authorize
                 // Public routes
-                .requestMatchers("/","/login", "/register", "/forgot-password", "/reset-password").permitAll()
+                .requestMatchers("/","/login","/login.html" ,"/register","/index","/index.html","/register.html", "/forgot-password", "/reset-password").permitAll()
                 .requestMatchers(HttpMethod.GET, "/css/**", "/js/**", "/images/**", "/fonts/**").permitAll()
                 .requestMatchers(HttpMethod.GET, "/", "/hms/").permitAll()
                 
