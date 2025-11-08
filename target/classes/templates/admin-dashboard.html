@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - HealthCare Pro</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif']
+                    },
+                    colors: {
+                        primary: {
+                            50: '#EBF3FF',
+                            500: '#3B82F6',
+                            700: '#1D4ED8'
+                        },
+                        neutral: {
+                            50: '#F8F9FA',
+                            100: '#FFFFFF',
+                            300: '#E5E7EB',
+                            600: '#4B5563',
+                            900: '#111827'
+                        },
+                        success: {
+                            500: '#10B981'
+                        },
+                        warning: {
+                            500: '#F59E0B'
+                        },
+                        error: {
+                            500: '#EF4444'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .shadow-card { box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); }
+        .shadow-card-hover { box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1); }
+    </style>
+</head>
+<body class="bg-neutral-50 font-sans text-neutral-900">
+    <!-- Top Navigation -->
+    <nav class="bg-neutral-100 shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center">
+                        <svg class="h-8 w-8 text-primary-500" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M4 4a2 2 0 00-2 2v1h16V6a2 2 0 00-2-2H4zM18 9H2v5a2 2 0 002 2h12a2 2 0 002-2V9zM4 13a1 1 0 011-1h1a1 1 0 110 2H5a1 1 0 01-1-1zm5-1a1 1 0 100 2h1a1 1 0 100-2H9z"/>
+                        </svg>
+                        <span class="ml-2 text-xl font-bold text-neutral-900">HealthCare Pro</span>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <div class="relative">
+                        <button onclick="toggleNotifications()" class="p-2 text-neutral-600 hover:text-neutral-900 relative">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z"/>
+                            </svg>
+                            <span class="absolute top-0 right-0 h-2 w-2 bg-error-500 rounded-full"></span>
+                        </button>
+                        <div id="notificationDropdown" class="hidden absolute right-0 mt-2 w-80 bg-neutral-100 rounded-xl shadow-card z-50">
+                            <div class="p-4 border-b border-neutral-300">
+                                <h3 class="font-semibold">System Alerts</h3>
+                            </div>
+                            <div class="max-h-64 overflow-y-auto">
+                                <div class="p-4 border-b border-neutral-200 hover:bg-neutral-50">
+                                    <p class="text-sm font-medium">System Maintenance</p>
+                                    <p class="text-xs text-neutral-600">Scheduled maintenance on Dec 15 at 2:00 AM</p>
+                                </div>
+                                <div class="p-4 border-b border-neutral-200 hover:bg-neutral-50">
+                                    <p class="text-sm font-medium">Capacity Alert</p>
+                                    <p class="text-xs text-neutral-600">ICU at 95% capacity - Consider patient transfers</p>
+                                </div>
+                                <div class="p-4 hover:bg-neutral-50">
+                                    <p class="text-sm font-medium">Security Update</p>
+                                    <p class="text-xs text-neutral-600">New security patch available for installation</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="relative">
+                        <button onclick="toggleProfileMenu()" class="flex items-center space-x-2 p-2 text-neutral-600 hover:text-neutral-900">
+                            <div class="w-8 h-8 bg-error-500 rounded-full flex items-center justify-center">
+                                <span class="text-white text-sm font-medium" id="userInitials">AD</span>
+                            </div>
+                            <span class="text-sm font-medium" id="userName">Admin</span>
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"/>
+                            </svg>
+                        </button>
+                        <div id="profileDropdown" class="hidden absolute right-0 mt-2 w-48 bg-neutral-100 rounded-xl shadow-card z-50">
+                            <div class="p-4 border-b border-neutral-300">
+                                <p class="text-sm font-medium" id="userEmail">admin@demo.com</p>
+                                <p class="text-xs text-neutral-600">Administrator</p>
+                            </div>
+                            <div class="py-2">
+                                <a href="#" class="block px-4 py-2 text-sm text-neutral-700 hover:bg-neutral-200">System Settings</a>
+                                <a href="#" class="block px-4 py-2 text-sm text-neutral-700 hover:bg-neutral-200">User Management</a>
+                                <a href="#" class="block px-4 py-2 text-sm text-neutral-700 hover:bg-neutral-200">Reports</a>
+                                <div class="border-t border-neutral-300 mt-2 pt-2">
+                                    <button onclick="logout()" class="block w-full text-left px-4 py-2 text-sm text-error-600 hover:bg-neutral-200">Sign Out</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="flex max-w-7xl mx-auto">
+        <!-- Sidebar -->
+        <nav class="w-60 bg-neutral-100 min-h-screen p-6">
+            <div class="space-y-2">
+                <a href="admin-dashboard.html" class="flex items-center space-x-3 px-4 py-3 rounded-xl bg-primary-500 text-white">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"/>
+                    </svg>
+                    <span class="font-medium">Dashboard</span>
+                </a>
+                <a href="#" onclick="showUserManagement()" class="flex items-center space-x-3 px-4 py-3 rounded-xl text-neutral-700 hover:bg-neutral-200">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z"/>
+                    </svg>
+                    <span class="font-medium">User Management</span>
+                </a>
+                <a href="#" onclick="showDepartmentManagement()" class="flex items-center space-x-3 px-4 py-3 rounded-xl text-neutral-700 hover:bg-neutral-200">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M2 6a2 2 0 012-2h6a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6zM2 16a2 2 0 012-2h6a2 2 0 012 2v4a2 2 0 01-2 2H4a2 2 0 01-2-2v-4z"/>
+                    </svg>
+                    <span class="font-medium">Departments</span>
+                </a>
+                <a href="#" onclick="showAppointmentOversight()" class="flex items-center space-x-3 px-4 py-3 rounded-xl text-neutral-700 hover:bg-neutral-200">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                    </svg>
+                    <span class="font-medium">Appointments</span>
+                </a>
+                <a href="#" onclick="showBillingManagement()" class="flex items-center space-x-3 px-4 py-3 rounded-xl text-neutral-700 hover:bg-neutral-200">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M4 4a2 2 0 00-2 2v1h16V6a2 2 0 00-2-2H4zM18 9H2v5a2 2 0 002 2h12a2 2 0 002-2V9zM4 13a1 1 0 011-1h1a1 1 0 110 2H5a1 1 0 01-1-1zm5-1a1 1 0 100 2h1a1 1 0 100-2H9z"/>
+                    </svg>
+                    <span class="font-medium">Billing & Finance</span>
+                </a>
+                <a href="#" onclick="showReporting()" class="flex items-center space-x-3 px-4 py-3 rounded-xl text-neutral-700 hover:bg-neutral-200">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zM8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zM14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z"/>
+                    </svg>
+                    <span class="font-medium">Reports & Analytics</span>
+                </a>
+                <a href="#" onclick="showSystemSettings()" class="flex items-center space-x-3 px-4 py-3 rounded-xl text-neutral-700 hover:bg-neutral-200">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd"/>
+                    </svg>
+                    <span class="font-medium">System Settings</span>
+                </a>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="flex-1 p-6">
+            <!-- Welcome Section -->
+            <div class="mb-8">
+                <h1 class="text-3xl font-bold text-neutral-900">Welcome, <span id="adminName">Administrator</span></h1>
+                <p class="text-neutral-600 mt-2">System overview and management dashboard for HealthCare Pro</p>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                <button onclick="showUserManagement()" class="bg-neutral-100 rounded-xl p-6 shadow-card hover:shadow-card-hover hover:transform hover:-translate-y-1 transition-all duration-250 text-left">
+                    <div class="w-12 h-12 bg-primary-500 rounded-lg flex items-center justify-center mb-4">
+                        <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z"/>
+                        </svg>
+                    </div>
+                    <h3 class="font-semibold text-neutral-900">Add User</h3>
+                    <p class="text-sm text-neutral-600 mt-1">Create new system user</p>
+                </button>
+
+                <button onclick="showReporting()" class="bg-neutral-100 rounded-xl p-6 shadow-card hover:shadow-card-hover hover:transform hover:-translate-y-1 transition-all duration-250 text-left">
+                    <div class="w-12 h-12 bg-success-500 rounded-lg flex items-center justify-center mb-4">
+                        <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zM8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zM14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z"/>
+                        </svg>
+                    </div>
+                    <h3 class="font-semibold text-neutral-900">Generate Report</h3>
+                    <p class="text-sm text-neutral-600 mt-1">Create system reports</p>
+                </button>
+
+                <button onclick="showDepartmentManagement()" class="bg-neutral-100 rounded-xl p-6 shadow-card hover:shadow-card-hover hover:transform hover:-translate-y-1 transition-all duration-250 text-left">
+                    <div class="w-12 h-12 bg-warning-500 rounded-lg flex items-center justify-center mb-4">
+                        <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M2 6a2 2 0 012-2h6a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6zM2 16a2 2 0 012-2h6a2 2 0 012 2v4a2 2 0 01-2 2H4a2 2 0 01-2-2v-4z"/>
+                        </svg>
+                    </div>
+                    <h3 class="font-semibold text-neutral-900">Manage Departments</h3>
+                    <p class="text-sm text-neutral-600 mt-1">Organize hospital departments</p>
+                </button>
+
+                <button onclick="showSystemSettings()" class="bg-neutral-100 rounded-xl p-6 shadow-card hover:shadow-card-hover hover:transform hover:-translate-y-1 transition-all duration-250 text-left">
+                    <div class="w-12 h-12 bg-error-500 rounded-lg flex items-center justify-center mb-4">
+                        <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd"/>
+                        </svg>
+                    </div>
+                    <h3 class="font-semibold text-neutral-900">System Settings</h3>
+                    <p class="text-sm text-neutral-600 mt-1">Configure system parameters</p>
+                </button>
+            </div>
+
+            <!-- System Overview Metrics -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                <div class="bg-neutral-100 rounded-xl p-6 shadow-card">
+                    <div class="flex items-center">
+                        <div class="w-12 h-12 bg-primary-500 rounded-lg flex items-center justify-center">
+                            <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z"/>
+                            </svg>
+                        </div>
+                        <div class="ml-4">
+                            <h3 class="text-2xl font-bold text-neutral-900" id="totalPatients">1,247</h3>
+                            <p class="text-sm text-neutral-600">Total Patients</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-neutral-100 rounded-xl p-6 shadow-card">
+                    <div class="flex items-center">
+                        <div class="w-12 h-12 bg-success-500 rounded-lg flex items-center justify-center">
+                            <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z"/>
+                            </svg>
+                        </div>
+                        <div class="ml-4">
+                            <h3 class="text-2xl font-bold text-neutral-900" id="totalDoctors">45</h3>
+                            <p class="text-sm text-neutral-600">Total Doctors</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-neutral-100 rounded-xl p-6 shadow-card">
+                    <div class="flex items-center">
+                        <div class="w-12 h-12 bg-warning-500 rounded-lg flex items-center justify-center">
+                            <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                            </svg>
+                        </div>
+                        <div class="ml-4">
+                            <h3 class="text-2xl font-bold text-neutral-900" id="appointmentsToday">127</h3>
+                            <p class="text-sm text-neutral-600">Appointments Today</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-neutral-100 rounded-xl p-6 shadow-card">
+                    <div class="flex items-center">
+                        <div class="w-12 h-12 bg-error-500 rounded-lg flex items-center justify-center">
+                            <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M4 4a2 2 0 00-2 2v1h16V6a2 2 0 00-2-2H4zM18 9H2v5a2 2 0 002 2h12a2 2 0 002-2V9zM4 13a1 1 0 011-1h1a1 1 0 110 2H5a1 1 0 01-1-1zm5-1a1 1 0 100 2h1a1 1 0 100-2H9z"/>
+                            </svg>
+                        </div>
+                        <div class="ml-4">
+                            <h3 class="text-2xl font-bold text-neutral-900" id="monthlyRevenue">$284K</h3>
+                            <p class="text-sm text-neutral-600">Monthly Revenue</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Content Sections -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- Recent User Activity -->
+                <div class="bg-neutral-100 rounded-xl p-6 shadow-card">
+                    <div class="flex items-center justify-between mb-6">
+                        <h2 class="text-xl font-semibold text-neutral-900">Recent User Activity</h2>
+                        <button onclick="showUserManagement()" class="text-primary-500 text-sm font-medium hover:text-primary-700">View All</button>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between p-4 bg-neutral-200 rounded-xl">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-8 h-8 bg-success-500 rounded-full flex items-center justify-center">
+                                    <span class="text-white text-xs font-medium">NJ</span>
+                                </div>
+                                <div>
+                                    <p class="font-medium text-neutral-900">Nurse Johnson</p>
+                                    <p class="text-sm text-neutral-600">Updated patient vitals</p>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <p class="text-xs text-neutral-500">2 min ago</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between p-4 bg-neutral-200 rounded-xl">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-8 h-8 bg-primary-500 rounded-full flex items-center justify-center">
+                                    <span class="text-white text-xs font-medium">DS</span>
+                                </div>
+                                <div>
+                                    <p class="font-medium text-neutral-900">Dr. Smith</p>
+                                    <p class="text-sm text-neutral-600">Created new prescription</p>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <p class="text-xs text-neutral-500">15 min ago</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between p-4 bg-neutral-200 rounded-xl">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-8 h-8 bg-warning-500 rounded-full flex items-center justify-center">
+                                    <span class="text-white text-xs font-medium">JD</span>
+                                </div>
+                                <div>
+                                    <p class="font-medium text-neutral-900">John Doe</p>
+                                    <p class="text-sm text-neutral-600">Booked new appointment</p>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <p class="text-xs text-neutral-500">1 hour ago</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- System Status -->
+                <div class="bg-neutral-100 rounded-xl p-6 shadow-card">
+                    <div class="flex items-center justify-between mb-6">
+                        <h2 class="text-xl font-semibold text-neutral-900">System Status</h2>
+                        <span class="px-2 py-1 bg-success-500 text-white text-xs rounded-full">All Systems Operational</span>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between p-4 bg-neutral-200 rounded-xl">
+                            <div>
+                                <p class="font-medium text-neutral-900">Database Performance</p>
+                                <p class="text-sm text-neutral-600">Response time: 120ms</p>
+                            </div>
+                            <div class="text-right">
+                                <span class="px-2 py-1 bg-success-500 text-white text-xs rounded-full">Good</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between p-4 bg-neutral-200 rounded-xl">
+                            <div>
+                                <p class="font-medium text-neutral-900">Server Uptime</p>
+                                <p class="text-sm text-neutral-600">99.9% uptime this month</p>
+                            </div>
+                            <div class="text-right">
+                                <span class="px-2 py-1 bg-success-500 text-white text-xs rounded-full">Excellent</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between p-4 bg-neutral-200 rounded-xl">
+                            <div>
+                                <p class="font-medium text-neutral-900">Storage Usage</p>
+                                <p class="text-sm text-neutral-600">68% of available space</p>
+                            </div>
+                            <div class="text-right">
+                                <span class="px-2 py-1 bg-warning-500 text-white text-xs rounded-full">Monitor</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Department Overview -->
+            <div class="mt-8">
+                <div class="bg-neutral-100 rounded-xl p-6 shadow-card">
+                    <div class="flex items-center justify-between mb-6">
+                        <h2 class="text-xl font-semibold text-neutral-900">Department Overview</h2>
+                        <button onclick="showDepartmentManagement()" class="text-primary-500 text-sm font-medium hover:text-primary-700">Manage All</button>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <div class="p-4 bg-neutral-200 rounded-xl">
+                            <div class="flex justify-between items-start mb-2">
+                                <h3 class="font-semibold text-neutral-900">Emergency</h3>
+                                <span class="px-2 py-1 bg-error-500 text-white text-xs rounded-full">High Capacity</span>
+                            </div>
+                            <p class="text-sm text-neutral-600 mb-2">Current patients: 28/30</p>
+                            <div class="text-xs text-neutral-500 space-y-1">
+                                <p>Doctors on duty: 6</p>
+                                <p>Nurses on duty: 12</p>
+                            </div>
+                        </div>
+                        
+                        <div class="p-4 bg-neutral-200 rounded-xl">
+                            <div class="flex justify-between items-start mb-2">
+                                <h3 class="font-semibold text-neutral-900">Cardiology</h3>
+                                <span class="px-2 py-1 bg-warning-500 text-white text-xs rounded-full">Moderate</span>
+                            </div>
+                            <p class="text-sm text-neutral-600 mb-2">Current patients: 18/25</p>
+                            <div class="text-xs text-neutral-500 space-y-1">
+                                <p>Doctors on duty: 4</p>
+                                <p>Nurses on duty: 8</p>
+                            </div>
+                        </div>
+                        
+                        <div class="p-4 bg-neutral-200 rounded-xl">
+                            <div class="flex justify-between items-start mb-2">
+                                <h3 class="font-semibold text-neutral-900">Pediatrics</h3>
+                                <span class="px-2 py-1 bg-success-500 text-white text-xs rounded-full">Low</span>
+                            </div>
+                            <p class="text-sm text-neutral-600 mb-2">Current patients: 8/20</p>
+                            <div class="text-xs text-neutral-500 space-y-1">
+                                <p>Doctors on duty: 3</p>
+                                <p>Nurses on duty: 6</p>
+                            </div>
+                        </div>
+                        
+                        <div class="p-4 bg-neutral-200 rounded-xl">
+                            <div class="flex justify-between items-start mb-2">
+                                <h3 class="font-semibold text-neutral-900">Surgery</h3>
+                                <span class="px-2 py-1 bg-warning-500 text-white text-xs rounded-full">Moderate</span>
+                            </div>
+                            <p class="text-sm text-neutral-600 mb-2">Current patients: 12/18</p>
+                            <div class="text-xs text-neutral-500 space-y-1">
+                                <p>Surgeons on duty: 5</p>
+                                <p>Nurses on duty: 10</p>
+                            </div>
+                        </div>
+                        
+                        <div class="p-4 bg-neutral-200 rounded-xl">
+                            <div class="flex justify-between items-start mb-2">
+                                <h3 class="font-semibold text-neutral-900">ICU</h3>
+                                <span class="px-2 py-1 bg-error-500 text-white text-xs rounded-full">Critical</span>
+                            </div>
+                            <p class="text-sm text-neutral-600 mb-2">Current patients: 19/20</p>
+                            <div class="text-xs text-neutral-500 space-y-1">
+                                <p>Intensivists: 3</p>
+                                <p>ICU Nurses: 8</p>
+                            </div>
+                        </div>
+                        
+                        <div class="p-4 bg-neutral-200 rounded-xl">
+                            <div class="flex justify-between items-start mb-2">
+                                <h3 class="font-semibold text-neutral-900">General Ward</h3>
+                                <span class="px-2 py-1 bg-success-500 text-white text-xs rounded-full">Normal</span>
+                            </div>
+                            <p class="text-sm text-neutral-600 mb-2">Current patients: 45/60</p>
+                            <div class="text-xs text-neutral-500 space-y-1">
+                                <p>Doctors on duty: 8</p>
+                                <p>Nurses on duty: 15</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Check authentication
+        function checkAuth() {
+            const user = JSON.parse(localStorage.getItem('hms_user') || '{}');
+            if (!user.loggedIn || user.role !== 'admin') {
+                window.location.href = 'login.html';
+                return;
+            }
+            return user;
+        }
+
+        // Initialize user data
+        function initUserData() {
+            const user = checkAuth();
+            if (!user) return;
+            
+            const name = user.firstName && user.lastName ? `${user.firstName} ${user.lastName}` : 'Administrator';
+            document.getElementById('userName').textContent = name;
+            document.getElementById('userEmail').textContent = user.email || 'admin@demo.com';
+            document.getElementById('adminName').textContent = name;
+            
+            // Set user initials
+            const initials = name.split(' ').map(n => n[0]).join('').toUpperCase();
+            document.getElementById('userInitials').textContent = initials;
+        }
+
+        // Navigation functions
+        function showUserManagement() {
+            alert('User Management page would open here - comprehensive user administration with role management, permissions, and user activity tracking');
+        }
+
+        function showDepartmentManagement() {
+            alert('Department Management page would open here - manage hospital departments, assign staff, and configure department settings');
+        }
+
+        function showAppointmentOversight() {
+            alert('Appointment Oversight page would open here - view, modify, or cancel all appointments in the system with advanced filtering');
+        }
+
+        function showBillingManagement() {
+            alert('Billing & Finance page would open here - manage invoicing, payment tracking, financial reporting, and revenue analysis');
+        }
+
+        function showReporting() {
+            alert('Reports & Analytics page would open here - generate comprehensive reports on patient flow, revenue, staff performance, and system usage');
+        }
+
+        function showSystemSettings() {
+            alert('System Settings page would open here - configure system parameters, security settings, backup options, and integration settings');
+        }
+
+        // Dropdown functions
+        function toggleNotifications() {
+            const dropdown = document.getElementById('notificationDropdown');
+            dropdown.classList.toggle('hidden');
+        }
+
+        function toggleProfileMenu() {
+            const dropdown = document.getElementById('profileDropdown');
+            dropdown.classList.toggle('hidden');
+        }
+
+        // Logout function
+        function logout() {
+            localStorage.removeItem('hms_user');
+            window.location.href = 'index.html';
+        }
+
+        // Close dropdowns when clicking outside
+        document.addEventListener('click', function(event) {
+            const notificationDropdown = document.getElementById('notificationDropdown');
+            const profileDropdown = document.getElementById('profileDropdown');
+            
+            if (!event.target.closest('#notificationDropdown') && !event.target.closest('[onclick="toggleNotifications()"]')) {
+                notificationDropdown.classList.add('hidden');
+            }
+            
+            if (!event.target.closest('#profileDropdown') && !event.target.closest('[onclick="toggleProfileMenu()"]')) {
+                profileDropdown.classList.add('hidden');
+            }
+        });
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            initUserData();
+        });
+    </script>
+</body>
+</html>

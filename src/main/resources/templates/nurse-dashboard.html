@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nurse Dashboard - HealthCare Pro</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif']
+                    },
+                    colors: {
+                        primary: {
+                            50: '#EBF3FF',
+                            500: '#3B82F6',
+                            700: '#1D4ED8'
+                        },
+                        neutral: {
+                            50: '#F8F9FA',
+                            100: '#FFFFFF',
+                            300: '#E5E7EB',
+                            600: '#4B5563',
+                            900: '#111827'
+                        },
+                        success: {
+                            500: '#10B981'
+                        },
+                        warning: {
+                            500: '#F59E0B'
+                        },
+                        error: {
+                            500: '#EF4444'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .shadow-card { box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); }
+        .shadow-card-hover { box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1); }
+    </style>
+</head>
+<body class="bg-neutral-50 font-sans text-neutral-900">
+    <!-- Top Navigation -->
+    <nav class="bg-neutral-100 shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center">
+                        <svg class="h-8 w-8 text-primary-500" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M4 4a2 2 0 00-2 2v1h16V6a2 2 0 00-2-2H4zM18 9H2v5a2 2 0 002 2h12a2 2 0 002-2V9zM4 13a1 1 0 011-1h1a1 1 0 110 2H5a1 1 0 01-1-1zm5-1a1 1 0 100 2h1a1 1 0 100-2H9z"/>
+                        </svg>
+                        <span class="ml-2 text-xl font-bold text-neutral-900">HealthCare Pro</span>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <div class="relative">
+                        <button onclick="toggleNotifications()" class="p-2 text-neutral-600 hover:text-neutral-900 relative">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z"/>
+                            </svg>
+                            <span class="absolute top-0 right-0 h-2 w-2 bg-error-500 rounded-full"></span>
+                        </button>
+                        <div id="notificationDropdown" class="hidden absolute right-0 mt-2 w-80 bg-neutral-100 rounded-xl shadow-card z-50">
+                            <div class="p-4 border-b border-neutral-300">
+                                <h3 class="font-semibold">Critical Alerts</h3>
+                            </div>
+                            <div class="max-h-64 overflow-y-auto">
+                                <div class="p-4 border-b border-neutral-200 hover:bg-neutral-50">
+                                    <p class="text-sm font-medium">Patient Alert - Room 302</p>
+                                    <p class="text-xs text-neutral-600">Blood pressure spike - John Doe</p>
+                                </div>
+                                <div class="p-4 border-b border-neutral-200 hover:bg-neutral-50">
+                                    <p class="text-sm font-medium">Medication Due</p>
+                                    <p class="text-xs text-neutral-600">3 patients have medications due in next 30 minutes</p>
+                                </div>
+                                <div class="p-4 hover:bg-neutral-50">
+                                    <p class="text-sm font-medium">Doctor Request</p>
+                                    <p class="text-xs text-neutral-600">Dr. Smith requested patient update for Room 205</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="relative">
+                        <button onclick="toggleProfileMenu()" class="flex items-center space-x-2 p-2 text-neutral-600 hover:text-neutral-900">
+                            <div class="w-8 h-8 bg-warning-500 rounded-full flex items-center justify-center">
+                                <span class="text-white text-sm font-medium" id="userInitials">MJ</span>
+                            </div>
+                            <span class="text-sm font-medium" id="userName">Mary Johnson</span>
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"/>
+                            </svg>
+                        </button>
+                        <div id="profileDropdown" class="hidden absolute right-0 mt-2 w-48 bg-neutral-100 rounded-xl shadow-card z-50">
+                            <div class="p-4 border-b border-neutral-300">
+                                <p class="text-sm font-medium" id="userEmail">nurse@demo.com</p>
+                                <p class="text-xs text-neutral-600">Nurse</p>
+                            </div>
+                            <div class="py-2">
+                                <a href="#" class="block px-4 py-2 text-sm text-neutral-700 hover:bg-neutral-200">Profile Settings</a>
+                                <a href="#" class="block px-4 py-2 text-sm text-neutral-700 hover:bg-neutral-200">My Patients</a>
+                                <a href="#" class="block px-4 py-2 text-sm text-neutral-700 hover:bg-neutral-200">Shift Schedule</a>
+                                <div class="border-t border-neutral-300 mt-2 pt-2">
+                                    <button onclick="logout()" class="block w-full text-left px-4 py-2 text-sm text-error-600 hover:bg-neutral-200">Sign Out</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="flex max-w-7xl mx-auto">
+        <!-- Sidebar -->
+        <nav class="w-60 bg-neutral-100 min-h-screen p-6">
+            <div class="space-y-2">
+                <a href="nurse-dashboard.html" class="flex items-center space-x-3 px-4 py-3 rounded-xl bg-primary-500 text-white">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"/>
+                    </svg>
+                    <span class="font-medium">Dashboard</span>
+                </a>
+                <a href="#" onclick="showAssignedPatients()" class="flex items-center space-x-3 px-4 py-3 rounded-xl text-neutral-700 hover:bg-neutral-200">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z"/>
+                    </svg>
+                    <span class="font-medium">My Patients</span>
+                </a>
+                <a href="#" onclick="showVitals()" class="flex items-center space-x-3 px-4 py-3 rounded-xl text-neutral-700 hover:bg-neutral-200">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z"/>
+                    </svg>
+                    <span class="font-medium">Update Vitals</span>
+                </a>
+                <a href="#" onclick="showMedication()" class="flex items-center space-x-3 px-4 py-3 rounded-xl text-neutral-700 hover:bg-neutral-200">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z"/>
+                    </svg>
+                    <span class="font-medium">Medication Admin</span>
+                </a>
+                <a href="#" onclick="showBedManagement()" class="flex items-center space-x-3 px-4 py-3 rounded-xl text-neutral-700 hover:bg-neutral-200">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M2 4a2 2 0 012-2h12a2 2 0 012 2v2a2 2 0 01-2 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V8a2 2 0 01-2-2V4z"/>
+                    </svg>
+                    <span class="font-medium">Bed Management</span>
+                </a>
+                <a href="#" onclick="showTasks()" class="flex items-center space-x-3 px-4 py-3 rounded-xl text-neutral-700 hover:bg-neutral-200">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                    <span class="font-medium">Tasks & Alerts</span>
+                </a>
+                <a href="#" onclick="showCarePlans()" class="flex items-center space-x-3 px-4 py-3 rounded-xl text-neutral-700 hover:bg-neutral-200">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"/>
+                        <path fill-rule="evenodd" d="M4 5a2 2 0 012-2v1a3 3 0 001.5.87A1.5 1.5 0 019.5 6h1a2 2 0 012 2v6a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3z" clip-rule="evenodd"/>
+                    </svg>
+                    <span class="font-medium">Care Plans</span>
+                </a>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="flex-1 p-6">
+            <!-- Welcome Section -->
+            <div class="mb-8">
+                <h1 class="text-3xl font-bold text-neutral-900">Good morning, <span id="nurseName">Mary</span>!</h1>
+                <p class="text-neutral-600 mt-2">You have <span id="assignedCount" class="font-semibold">12</span> patients under your care. <span class="text-error-600 font-semibold">2 urgent alerts</span> require attention.</p>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                <button onclick="showVitals()" class="bg-neutral-100 rounded-xl p-6 shadow-card hover:shadow-card-hover hover:transform hover:-translate-y-1 transition-all duration-250 text-left">
+                    <div class="w-12 h-12 bg-error-500 rounded-lg flex items-center justify-center mb-4">
+                        <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z"/>
+                        </svg>
+                    </div>
+                    <h3 class="font-semibold text-neutral-900">Update Vitals</h3>
+                    <p class="text-sm text-neutral-600 mt-1">Record patient vitals</p>
+                </button>
+
+                <button onclick="showMedication()" class="bg-neutral-100 rounded-xl p-6 shadow-card hover:shadow-card-hover hover:transform hover:-translate-y-1 transition-all duration-250 text-left">
+                    <div class="w-12 h-12 bg-warning-500 rounded-lg flex items-center justify-center mb-4">
+                        <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z"/>
+                        </svg>
+                    </div>
+                    <h3 class="font-semibold text-neutral-900">Medication</h3>
+                    <p class="text-sm text-neutral-600 mt-1">Administer medications</p>
+                </button>
+
+                <button onclick="showBedManagement()" class="bg-neutral-100 rounded-xl p-6 shadow-card hover:shadow-card-hover hover:transform hover:-translate-y-1 transition-all duration-250 text-left">
+                    <div class="w-12 h-12 bg-primary-500 rounded-lg flex items-center justify-center mb-4">
+                        <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M2 4a2 2 0 012-2h12a2 2 0 012 2v2a2 2 0 01-2 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V8a2 2 0 01-2-2V4z"/>
+                        </svg>
+                    </div>
+                    <h3 class="font-semibold text-neutral-900">Bed Management</h3>
+                    <p class="text-sm text-neutral-600 mt-1">Manage patient beds</p>
+                </button>
+
+                <button onclick="showAssignedPatients()" class="bg-neutral-100 rounded-xl p-6 shadow-card hover:shadow-card-hover hover:transform hover:-translate-y-1 transition-all duration-250 text-left">
+                    <div class="w-12 h-12 bg-success-500 rounded-lg flex items-center justify-center mb-4">
+                        <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z"/>
+                        </svg>
+                    </div>
+                    <h3 class="font-semibold text-neutral-900">Patient List</h3>
+                    <p class="text-sm text-neutral-600 mt-1">View assigned patients</p>
+                </button>
+            </div>
+
+            <!-- Dashboard Stats -->
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+                <div class="bg-neutral-100 rounded-xl p-6 shadow-card">
+                    <div class="flex items-center">
+                        <div class="w-12 h-12 bg-primary-500 rounded-lg flex items-center justify-center">
+                            <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z"/>
+                            </svg>
+                        </div>
+                        <div class="ml-4">
+                            <h3 class="text-2xl font-bold text-neutral-900" id="totalPatients">12</h3>
+                            <p class="text-sm text-neutral-600">Total Patients</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-neutral-100 rounded-xl p-6 shadow-card">
+                    <div class="flex items-center">
+                        <div class="w-12 h-12 bg-error-500 rounded-lg flex items-center justify-center">
+                            <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z"/>
+                            </svg>
+                        </div>
+                        <div class="ml-4">
+                            <h3 class="text-2xl font-bold text-error-500" id="criticalAlerts">2</h3>
+                            <p class="text-sm text-neutral-600">Critical Alerts</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-neutral-100 rounded-xl p-6 shadow-card">
+                    <div class="flex items-center">
+                        <div class="w-12 h-12 bg-warning-500 rounded-lg flex items-center justify-center">
+                            <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z"/>
+                            </svg>
+                        </div>
+                        <div class="ml-4">
+                            <h3 class="text-2xl font-bold text-neutral-900" id="medicationsDue">5</h3>
+                            <p class="text-sm text-neutral-600">Medications Due</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-neutral-100 rounded-xl p-6 shadow-card">
+                    <div class="flex items-center">
+                        <div class="w-12 h-12 bg-success-500 rounded-lg flex items-center justify-center">
+                            <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                        </div>
+                        <div class="ml-4">
+                            <h3 class="text-2xl font-bold text-neutral-900" id="tasksCompleted">8</h3>
+                            <p class="text-sm text-neutral-600">Tasks Completed</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Content Sections -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- Critical Alerts -->
+                <div class="bg-neutral-100 rounded-xl p-6 shadow-card">
+                    <div class="flex items-center justify-between mb-6">
+                        <h2 class="text-xl font-semibold text-neutral-900">Critical Alerts</h2>
+                        <button onclick="showTasks()" class="text-primary-500 text-sm font-medium hover:text-primary-700">View All</button>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="p-4 bg-error-50 border-l-4 border-error-500 rounded-xl">
+                            <div class="flex justify-between items-start mb-2">
+                                <p class="font-medium text-error-900">High Blood Pressure - Room 302</p>
+                                <span class="px-2 py-1 bg-error-500 text-white text-xs rounded-full">Critical</span>
+                            </div>
+                            <p class="text-sm text-error-700">John Doe - BP: 180/110 mmHg (15 min ago)</p>
+                            <p class="text-xs text-error-600 mt-1">Action Required: Notify doctor immediately</p>
+                        </div>
+                        <div class="p-4 bg-warning-50 border-l-4 border-warning-500 rounded-xl">
+                            <div class="flex justify-between items-start mb-2">
+                                <p class="font-medium text-warning-900">Fever Spike - Room 205</p>
+                                <span class="px-2 py-1 bg-warning-500 text-white text-xs rounded-full">Warning</span>
+                            </div>
+                            <p class="text-sm text-warning-700">Jane Smith - Temperature: 39.2°C (30 min ago)</p>
+                            <p class="text-xs text-warning-600 mt-1">Monitor closely, consider antipyretics</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Medication Schedule -->
+                <div class="bg-neutral-100 rounded-xl p-6 shadow-card">
+                    <div class="flex items-center justify-between mb-6">
+                        <h2 class="text-xl font-semibold text-neutral-900">Medication Schedule</h2>
+                        <button onclick="showMedication()" class="text-primary-500 text-sm font-medium hover:text-primary-700">View All</button>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between p-4 bg-neutral-200 rounded-xl">
+                            <div>
+                                <p class="font-medium text-neutral-900">John Doe - Room 302</p>
+                                <p class="text-sm text-neutral-600">Lisinopril 10mg</p>
+                                <p class="text-xs text-neutral-500">Due: 2:00 PM (15 min overdue)</p>
+                            </div>
+                            <div class="text-right">
+                                <span class="px-2 py-1 bg-error-500 text-white text-xs rounded-full">Overdue</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between p-4 bg-neutral-200 rounded-xl">
+                            <div>
+                                <p class="font-medium text-neutral-900">Jane Smith - Room 205</p>
+                                <p class="text-sm text-neutral-600">Acetaminophen 500mg</p>
+                                <p class="text-xs text-neutral-500">Due: 2:30 PM (in 15 min)</p>
+                            </div>
+                            <div class="text-right">
+                                <span class="px-2 py-1 bg-warning-500 text-white text-xs rounded-full">Due Soon</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between p-4 bg-neutral-200 rounded-xl">
+                            <div>
+                                <p class="font-medium text-neutral-900">Michael Johnson - Room 108</p>
+                                <p class="text-sm text-neutral-600">Insulin 10 units</p>
+                                <p class="text-xs text-neutral-500">Due: 3:00 PM (in 45 min)</p>
+                            </div>
+                            <div class="text-right">
+                                <span class="px-2 py-1 bg-neutral-600 text-white text-xs rounded-full">Scheduled</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Assigned Patients -->
+            <div class="mt-8">
+                <div class="bg-neutral-100 rounded-xl p-6 shadow-card">
+                    <div class="flex items-center justify-between mb-6">
+                        <h2 class="text-xl font-semibold text-neutral-900">Assigned Patients</h2>
+                        <button onclick="showAssignedPatients()" class="text-primary-500 text-sm font-medium hover:text-primary-700">View All</button>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <div class="p-4 bg-neutral-200 rounded-xl border-l-4 border-success-500">
+                            <div class="flex justify-between items-start mb-2">
+                                <div>
+                                    <p class="font-medium text-neutral-900">John Doe</p>
+                                    <p class="text-sm text-neutral-600">Room 302</p>
+                                </div>
+                                <span class="px-2 py-1 bg-success-500 text-white text-xs rounded-full">Stable</span>
+                            </div>
+                            <p class="text-sm text-neutral-600 mb-2">Post-surgery monitoring</p>
+                            <div class="text-xs text-neutral-500 space-y-1">
+                                <p>BP: 120/80 | HR: 72 | Temp: 36.5°C</p>
+                                <p>Last vitals: 1 hour ago</p>
+                            </div>
+                        </div>
+                        
+                        <div class="p-4 bg-neutral-200 rounded-xl border-l-4 border-warning-500">
+                            <div class="flex justify-between items-start mb-2">
+                                <div>
+                                    <p class="font-medium text-neutral-900">Jane Smith</p>
+                                    <p class="text-sm text-neutral-600">Room 205</p>
+                                </div>
+                                <span class="px-2 py-1 bg-warning-500 text-white text-xs rounded-full">Caution</span>
+                            </div>
+                            <p class="text-sm text-neutral-600 mb-2">Pneumonia treatment</p>
+                            <div class="text-xs text-neutral-500 space-y-1">
+                                <p>BP: 140/90 | HR: 88 | Temp: 39.2°C</p>
+                                <p>Last vitals: 30 min ago</p>
+                            </div>
+                        </div>
+                        
+                        <div class="p-4 bg-neutral-200 rounded-xl border-l-4 border-primary-500">
+                            <div class="flex justify-between items-start mb-2">
+                                <div>
+                                    <p class="font-medium text-neutral-900">Michael Johnson</p>
+                                    <p class="text-sm text-neutral-600">Room 108</p>
+                                </div>
+                                <span class="px-2 py-1 bg-primary-500 text-white text-xs rounded-full">Recovery</span>
+                            </div>
+                            <p class="text-sm text-neutral-600 mb-2">Diabetes management</p>
+                            <div class="text-xs text-neutral-500 space-y-1">
+                                <p>BP: 130/85 | HR: 76 | Glucose: 120</p>
+                                <p>Last vitals: 2 hours ago</p>
+                            </div>
+                        </div>
+                        
+                        <div class="p-4 bg-neutral-200 rounded-xl border-l-4 border-neutral-600">
+                            <div class="flex justify-between items-start mb-2">
+                                <div>
+                                    <p class="font-medium text-neutral-900">Sarah Wilson</p>
+                                    <p class="text-sm text-neutral-600">Room 201</p>
+                                </div>
+                                <span class="px-2 py-1 bg-neutral-600 text-white text-xs rounded-full">Stable</span>
+                            </div>
+                            <p class="text-sm text-neutral-600 mb-2">Routine care</p>
+                            <div class="text-xs text-neutral-500 space-y-1">
+                                <p>BP: 118/78 | HR: 68 | Temp: 36.2°C</p>
+                                <p>Last vitals: 1 hour ago</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Check authentication
+        function checkAuth() {
+            const user = JSON.parse(localStorage.getItem('hms_user') || '{}');
+            if (!user.loggedIn || user.role !== 'nurse') {
+                window.location.href = 'login.html';
+                return;
+            }
+            return user;
+        }
+
+        // Initialize user data
+        function initUserData() {
+            const user = checkAuth();
+            if (!user) return;
+            
+            const name = user.firstName && user.lastName ? user.firstName : 'Mary';
+            document.getElementById('userName').textContent = `${user.firstName || 'Mary'} ${user.lastName || 'Johnson'}`;
+            document.getElementById('userEmail').textContent = user.email || 'nurse@demo.com';
+            document.getElementById('nurseName').textContent = name;
+            
+            // Set user initials
+            const initials = `${user.firstName ? user.firstName[0] : 'M'}${user.lastName ? user.lastName[0] : 'J'}`;
+            document.getElementById('userInitials').textContent = initials.toUpperCase();
+        }
+
+        // Navigation functions
+        function showAssignedPatients() {
+            alert('My Patients page would open here - showing detailed view of all assigned patients with care plans and history');
+        }
+
+        function showVitals() {
+            alert('Update Vitals page would open here - form to record patient vital signs and measurements');
+        }
+
+        function showMedication() {
+            alert('Medication Administration page would open here - medication list with administration tracking and patient verification');
+        }
+
+        function showBedManagement() {
+            alert('Bed Management page would open here - hospital bed assignment, availability, and patient transfer management');
+        }
+
+        function showTasks() {
+            alert('Tasks & Alerts page would open here - comprehensive list of all pending tasks, alerts, and care activities');
+        }
+
+        function showCarePlans() {
+            alert('Care Plans page would open here - patient care plans, treatment schedules, and nursing interventions');
+        }
+
+        // Dropdown functions
+        function toggleNotifications() {
+            const dropdown = document.getElementById('notificationDropdown');
+            dropdown.classList.toggle('hidden');
+        }
+
+        function toggleProfileMenu() {
+            const dropdown = document.getElementById('profileDropdown');
+            dropdown.classList.toggle('hidden');
+        }
+
+        // Logout function
+        function logout() {
+            localStorage.removeItem('hms_user');
+            window.location.href = 'index.html';
+        }
+
+        // Close dropdowns when clicking outside
+        document.addEventListener('click', function(event) {
+            const notificationDropdown = document.getElementById('notificationDropdown');
+            const profileDropdown = document.getElementById('profileDropdown');
+            
+            if (!event.target.closest('#notificationDropdown') && !event.target.closest('[onclick="toggleNotifications()"]')) {
+                notificationDropdown.classList.add('hidden');
+            }
+            
+            if (!event.target.closest('#profileDropdown') && !event.target.closest('[onclick="toggleProfileMenu()"]')) {
+                profileDropdown.classList.add('hidden');
+            }
+        });
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            initUserData();
+        });
+    </script>
+</body>
+</html>

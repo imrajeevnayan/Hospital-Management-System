@@ -1,0 +1,98 @@
+spring:
+  config:
+    activate:
+      on-profile: dev  # Set to 'dev' profile, can be adjusted for different profiles (e.g., prod)
+
+  application:
+    name: hospital-management-system
+
+  datasource:
+    url: jdbc:h2:mem:hmsdb  # In-memory H2 database
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:  # No password by default for H2 in-memory database
+    hikari:
+      maximum-pool-size: 20
+      minimum-idle: 5
+      connection-timeout: 30000
+
+  h2:
+    console:
+      enabled: true  # Enables H2 Console access for development (URL: http://localhost:8080/h2-console)
+      path: /h2-console
+
+  jpa:
+    hibernate:
+      ddl-auto: create-drop  # Will drop tables on startup, recreate them (Use 'update' in production)
+    show-sql: true  # Show SQL queries in the console (good for debugging)
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect  # Correct dialect for H2
+        format_sql: true  # Formats the SQL queries for better readability
+    defer-datasource-initialization: true  # Defer initialization until after the datasource is set up (for more control)
+
+  sql:
+    init:
+      mode: always  # Always run schema and data SQL scripts
+      schema-locations: classpath:schema.sql  # Location of the schema file (create the schema structure)
+      data-locations: classpath:data.sql  # Location of the data file (populate data after schema)
+
+  thymeleaf:
+    cache: false  # Disable Thymeleaf template caching during development
+    prefix: classpath:/templates/
+    suffix: .html
+    mode: HTML5
+    encoding: UTF-8
+    content-type: text/html
+
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8080  # JWT issuer URI (ensure this matches your OAuth2 provider)
+
+# Mail Configuration
+spring.mail:
+  host: smtp.gmail.com
+  port: 587
+  username: your-email@gmail.com  # Add your Gmail username
+  password: your-app-password  # Add your Gmail App password
+  properties:
+    mail:
+      smtp:
+        auth: true
+        starttls:
+          enable: true
+
+# Logging Configuration
+logging:
+  level:
+    com.hms: DEBUG  # Enable debug logging for your package
+    org.springframework.security: DEBUG  # Debugging Spring Security
+    org.hibernate.SQL: DEBUG  # Show Hibernate SQL queries
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE  # Trace SQL bind parameters for debugging
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"  # Log pattern
+
+# Hospital System Configuration (HMS)
+hms:
+  security:
+    jwt:
+      secret: mySecretKey123456789  # JWT secret key (keep this safe in production)
+      expiration: 86400  # JWT expiration time in seconds (24 hours)
+  email:
+    from: hospital@system.com  # Default sender email address
+    from-name: HMS System  # Name associated with the sender
+  pagination:
+    default-size: 10  # Default pagination size
+    max-size: 100  # Maximum pagination size
+
+# Management endpoints (for monitoring and metrics)
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics  # Expose health, info, and metrics endpoints
+  endpoint:
+    health:
+      show-details: when-authorized  # Show health details only for authorized requests

@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - HealthCare Pro</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif']
+                    },
+                    colors: {
+                        primary: {
+                            50: '#EBF3FF',
+                            500: '#3B82F6',
+                            700: '#1D4ED8'
+                        },
+                        neutral: {
+                            50: '#F8F9FA',
+                            100: '#FFFFFF',
+                            300: '#E5E7EB',
+                            600: '#4B5563',
+                            900: '#111827'
+                        },
+                        success: {
+                            500: '#10B981'
+                        },
+                        warning: {
+                            500: '#F59E0B'
+                        },
+                        error: {
+                            500: '#EF4444'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .shadow-card { box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); }
+        .shadow-card-hover { box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1); }
+    </style>
+</head>
+<body class="bg-neutral-50 font-sans text-neutral-900 min-h-screen flex items-center justify-center">
+    <!-- Navigation -->
+    <nav class="bg-neutral-100 shadow-sm fixed top-0 left-0 right-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <a href="index.html" class="flex-shrink-0 flex items-center">
+                        <svg class="h-8 w-8 text-primary-500" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M4 4a2 2 0 00-2 2v1h16V6a2 2 0 00-2-2H4zM18 9H2v5a2 2 0 002 2h12a2 2 0 002-2V9zM4 13a1 1 0 011-1h1a1 1 0 110 2H5a1 1 0 01-1-1zm5-1a1 1 0 100 2h1a1 1 0 100-2H9z"/>
+                        </svg>
+                        <span class="ml-2 text-xl font-bold text-neutral-900">HealthCare Pro</span>
+                    </a>
+                </div>
+                <div class="flex items-center">
+                    <a href="index.html" class="text-neutral-600 hover:text-neutral-900 px-3 py-2 text-sm font-medium">Home</a>
+                    <a href="register.html" class="text-primary-500 hover:text-primary-700 px-3 py-2 text-sm font-medium">Register</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Login Form -->
+    <div class="min-h-screen flex items-center justify-center pt-16 pb-12 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-md w-full space-y-8">
+            <div>
+                <h2 class="mt-6 text-center text-3xl font-bold text-neutral-900">
+                    Sign in to your account
+                </h2>
+                <p class="mt-2 text-center text-sm text-neutral-600">
+                    Or
+                    <a href="register.html" class="font-medium text-primary-500 hover:text-primary-700">
+                        create a new account
+                    </a>
+                </p>
+            </div>
+            <div class="bg-neutral-100 rounded-xl p-8 shadow-card">
+                <form class="space-y-6" id="loginForm">
+                    <div>
+                        <label for="email" class="block text-sm font-medium text-neutral-900 mb-2">Email address</label>
+                        <input id="email" name="email" type="email" required 
+                               class="w-full px-4 py-3 bg-neutral-100 border border-neutral-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors duration-200"
+                               placeholder="Enter your email">
+                    </div>
+
+                    <div>
+                        <label for="password" class="block text-sm font-medium text-neutral-900 mb-2">Password</label>
+                        <div class="relative">
+                            <input id="password" name="password" type="password" required 
+                                   class="w-full px-4 py-3 bg-neutral-100 border border-neutral-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors duration-200 pr-12"
+                                   placeholder="Enter your password">
+                            <button type="button" onclick="togglePassword()" class="absolute right-3 top-1/2 transform -translate-y-1/2 text-neutral-600 hover:text-neutral-900">
+                                <svg id="passwordIcon" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M10 12a2 2 0 100-4 2 2 0 000 4z"/>
+                                    <path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center">
+                            <input id="remember-me" name="remember-me" type="checkbox" 
+                                   class="h-4 w-4 text-primary-500 focus:ring-primary-500 border-neutral-300 rounded">
+                            <label for="remember-me" class="ml-2 block text-sm text-neutral-600">
+                                Remember me
+                            </label>
+                        </div>
+                        <div class="text-sm">
+                            <a href="forgot-password.html" class="font-medium text-primary-500 hover:text-primary-700">
+                                Forgot your password?
+                            </a>
+                        </div>
+                    </div>
+
+                    <div>
+                        <button type="submit" 
+                                class="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-xl text-white bg-primary-500 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transform hover:scale-105 transition-all duration-200">
+                            Sign in
+                        </button>
+                    </div>
+
+                    <!-- Demo Accounts -->
+                    <div class="mt-8 border-t border-neutral-300 pt-6">
+                        <div class="text-center">
+                            <p class="text-sm text-neutral-600 mb-4">Try demo accounts:</p>
+                            <div class="grid grid-cols-2 gap-2 text-xs">
+                                <button type="button" onclick="loginAs('patient')" class="bg-neutral-200 hover:bg-neutral-300 text-neutral-700 px-3 py-2 rounded-lg transition-colors">
+                                    Patient Demo
+                                </button>
+                                <button type="button" onclick="loginAs('doctor')" class="bg-neutral-200 hover:bg-neutral-300 text-neutral-700 px-3 py-2 rounded-lg transition-colors">
+                                    Doctor Demo
+                                </button>
+                                <button type="button" onclick="loginAs('nurse')" class="bg-neutral-200 hover:bg-neutral-300 text-neutral-700 px-3 py-2 rounded-lg transition-colors">
+                                    Nurse Demo
+                                </button>
+                                <button type="button" onclick="loginAs('admin')" class="bg-neutral-200 hover:bg-neutral-300 text-neutral-700 px-3 py-2 rounded-lg transition-colors">
+                                    Admin Demo
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function togglePassword() {
+            const passwordInput = document.getElementById('password');
+            const passwordIcon = document.getElementById('passwordIcon');
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                passwordIcon.innerHTML = '<path fill-rule="evenodd" d="M3.707 2.293a1 1 0 00-1.414 1.414l14 14a1 1 0 001.414-1.414l-1.473-1.473A10.014 10.014 0 0019.542 10C18.268 5.943 14.478 3 10 3a9.958 9.958 0 00-4.512 1.074l-1.78-1.781zm4.261 4.26l1.514 1.515a2.003 2.003 0 012.45 2.45l1.514 1.514a4 4 0 00-5.478-5.478z" clip-rule="evenodd"/><path d="M12.454 16.697L9.75 13.992a4 4 0 01-3.742-3.741L2.335 6.578A9.98 9.98 0 00.458 10c1.274 4.057 5.065 7 9.542 7 .847 0 1.669-.105 2.454-.303z"/>';
+            } else {
+                passwordInput.type = 'password';
+                passwordIcon.innerHTML = '<path d="M10 12a2 2 0 100-4 2 2 0 000 4z"/><path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd"/>';
+            }
+        }
+
+        function loginAs(role) {
+            const roleEmails = {
+                'patient': 'patient@demo.com',
+                'doctor': 'doctor@demo.com', 
+                'nurse': 'nurse@demo.com',
+                'admin': 'admin@demo.com'
+            };
+            
+            document.getElementById('email').value = roleEmails[role];
+            document.getElementById('password').value = 'demo123';
+            
+            // Show loading state
+            const submitBtn = document.querySelector('button[type="submit"]');
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = 'Signing in...';
+            submitBtn.disabled = true;
+            
+            // Simulate login delay
+            setTimeout(() => {
+                handleLogin(role);
+            }, 1000);
+        }
+
+        function handleLogin(role) {
+            // Store user session
+            const userData = {
+                email: document.getElementById('email').value,
+                role: role,
+                loggedIn: true,
+                loginTime: new Date().toISOString()
+            };
+            
+            localStorage.setItem('hms_user', JSON.stringify(userData));
+            
+            // Redirect to appropriate dashboard
+            const dashboardUrls = {
+                'patient': 'patient-dashboard.html',
+                'doctor': 'doctor-dashboard.html',
+                'nurse': 'nurse-dashboard.html',
+                'admin': 'admin-dashboard.html'
+            };
+            
+            window.location.href = dashboardUrls[role];
+        }
+
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            
+            if (!email || !password) {
+                alert('Please fill in all fields');
+                return;
+            }
+            
+            // Simple role detection from email
+            let role = 'patient';
+            if (email.includes('doctor')) role = 'doctor';
+            else if (email.includes('nurse')) role = 'nurse';
+            else if (email.includes('admin')) role = 'admin';
+            
+            handleLogin(role);
+        });
+    </script>
+</body>
+</html>
