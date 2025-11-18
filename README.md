@@ -2,7 +2,7 @@
 
 A comprehensive, full-stack Hospital Management System built with **Spring Boot** and **Thymeleaf** templates, providing complete healthcare management functionality.
 
-![Hospital Management System Logo]([https://img.freepik.com/free-vector/hospital-management-system-logo_23-2148998320.jpg](https://www.google.com/imgres?q=hospital%20Management%20System&imgurl=https%3A%2F%2Fwww.maxaix.com%2Fblog%2Fwp-content%2Fuploads%2F2024%2F03%2FHospital-Management-System-development.jpg&imgrefurl=https%3A%2F%2Fwww.maxaix.com%2Fblog%2Fhospital-management-system-development%2F&docid=EL7RGrL5gEHyHM&tbnid=0BNze9-sQCA95M&vet=12ahUKEwi8hNupl_yQAxU8bfUHHetoNwMQM3oECBUQAA..i&w=1000&h=600&hcb=2&ved=2ahUKEwi8hNupl_yQAxU8bfUHHetoNwMQM3oECBUQAA))
+![Hospital Management System Logo]([https://www.google.com/imgres?q=hospital%20Management%20System&imgurl=https%3A%2F%2Fwww.maxaix.com%2Fblog%2Fwp-content%2Fuploads%2F2024%2F03%2FHospital-Management-System-development.jpg&imgrefurl=https%3A%2F%2Fwww.maxaix.com%2Fblog%2Fhospital-management-system-development%2F&docid=EL7RGrL5gEHyHM&tbnid=0BNze9-sQCA95M&vet=12ahUKEwi8hNupl_yQAxU8bfUHHetoNwMQM3oECBUQAA..i&w=1000&h=600&hcb=2&ved=2ahUKEwi8hNupl_yQAxU8bfUHHetoNwMQM3oECBUQAA])
 
 ## 🏗️ Architecture Overview
 
