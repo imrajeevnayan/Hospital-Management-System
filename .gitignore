@@ -13,3 +13,7 @@ build/
 .mvn/
 mvnw
 mvnw.cmd
+*.log
+hs_err_pid*
+replay_pid*
+.planning/
