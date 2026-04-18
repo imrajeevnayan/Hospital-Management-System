@@ -61,6 +61,20 @@ Before starting, ensure you have these installed:
 
 ---
 
+### Phase 3: Docker Deployment (Optional but Recommended) 🐳
+
+If you have Docker Desktop installed, you can skip the manual setup:
+
+1.  Open your terminal at the root directory.
+2.  Run: `docker-compose up --build`
+3.  This will automatically:
+    *   Set up a PostgreSQL database.
+    *   Build the Spring Boot backend.
+    *   Initialize the tables and start the API.
+    *   Expose the API at `localhost:8080`.
+
+---
+
 ## 👥 Default Login Credentials
 
 | Role | Username | Password |
@@ -84,7 +98,7 @@ Before starting, ensure you have these installed:
 - [x] **PostgreSQL Integration**: Complete! Moved from MySQL to Postgres.
 - [x] **Backend Separation**: Complete! Spring Boot API is isolated.
 - [x] **Frontend Modernization**: Complete! Sleek Tailwind CSS UI.
-- [ ] **Docker Support**: Coming Soon!
+- [x] **Docker Support**: Complete! Use `docker-compose` for instant deployment.
 - [ ] **Live Hosting**: Coming Soon!
 
 ---
