@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{hms/fragments/head :: head(${pageTitle})}"></head>
+<body class="min-h-screen text-slate-900">
+  <header th:replace="~{hms/fragments/navbar :: navbar}"></header>
+  <div class="mx-auto flex max-w-[1600px]">
+    <div th:replace="~{hms/fragments/sidebar :: sidebar(${activeMenu}, ${role})}"></div>
+    <main class="min-h-[calc(100vh-4rem)] w-full p-4 pt-6 lg:ml-72 lg:p-6">
+      <section class="mb-6 flex flex-wrap items-start justify-between gap-4"><div><p class="text-sm text-slate-500">Home / Prescriptions</p><h1 class="mt-1 text-2xl font-bold tracking-tight">Prescription Module</h1></div><button class="btn-primary">Generate Prescription</button></section>
+      <section class="grid gap-4 lg:grid-cols-3"><article class="panel hms-shadow p-5 lg:col-span-1"><h3 class="font-semibold">Doctor Form</h3><form id="prescriptionForm" class="mt-4 space-y-3" data-validate-form="true"><input id="medicine" class="input-shell" placeholder="Medicine Name" data-required="true" /><input id="dosage" class="input-shell" placeholder="Dosage" data-required="true" /><input id="frequency" class="input-shell" placeholder="Frequency" data-required="true" /><input id="duration" class="input-shell" placeholder="Duration" data-required="true" /><p class="hidden text-xs text-red-500" data-error-for="medicine">Required.</p><p class="hidden text-xs text-red-500" data-error-for="dosage">Required.</p><p class="hidden text-xs text-red-500" data-error-for="frequency">Required.</p><p class="hidden text-xs text-red-500" data-error-for="duration">Required.</p><button class="btn-primary w-full">Add Item</button></form></article><article class="panel hms-shadow p-5 lg:col-span-2"><h3 class="font-semibold">Prescription Table</h3><div class="mt-4 overflow-x-auto"><table class="min-w-full text-sm"><thead><tr class="text-left text-slate-500"><th class="pb-3">Medicine</th><th class="pb-3">Dosage</th><th class="pb-3">Status</th><th class="pb-3">Refill</th></tr></thead><tbody class="divide-y divide-slate-100"><tr class="table-row"><td class="py-3">Atorvastatin</td><td>10mg daily</td><td><span class="badge badge-completed">Active</span></td><td><span class="text-amber-600">Due in 4 days</span></td></tr><tr class="table-row"><td class="py-3">Metformin</td><td>500mg BID</td><td><span class="badge badge-pending">Pending Review</span></td><td><span class="text-slate-500">Not required</span></td></tr></tbody></table></div></article></section>
+
+    </main>
+  </div>
+  <div class="toast" data-toast></div>
+  <script th:src="@{/hms/assets/hms.js}" src="/hms/assets/hms.js"></script>
+</body>
+</html>

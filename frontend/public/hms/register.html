@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HMS | Register</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .input-shell {
+      @apply w-full rounded-2xl border-slate-200 bg-slate-50 px-4 py-3 transition-all focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/10 outline-none;
+    }
+  </style>
+</head>
+<body class="min-h-screen bg-slate-50 flex items-center justify-center p-6">
+  <div class="w-full max-w-2xl bg-white rounded-[2.5rem] border border-slate-200 p-10 shadow-2xl shadow-slate-200/50">
+    <div class="mb-8">
+      <h1 class="text-3xl font-black text-slate-900">Join HealthSync</h1>
+      <p class="mt-2 text-slate-500">Create your account to start managing healthcare.</p>
+    </div>
+    
+    <form class="grid gap-6 sm:grid-cols-2" id="registerForm">
+      <div class="space-y-2">
+        <label for="fullName" class="text-sm font-semibold text-slate-700">Full Name</label>
+        <input id="fullName" name="fullName" class="input-shell" placeholder="John Doe" required />
+      </div>
+      
+      <div class="space-y-2">
+        <label for="role" class="text-sm font-semibold text-slate-700">Role</label>
+        <select id="role" name="role" class="input-shell appearance-none">
+          <option>PATIENT</option>
+          <option>DOCTOR</option>
+          <option>NURSE</option>
+          <option>ADMIN</option>
+        </select>
+      </div>
+      
+      <div class="space-y-2">
+        <label for="email" class="text-sm font-semibold text-slate-700">Email Address</label>
+        <input id="email" name="email" type="email" class="input-shell" placeholder="john@example.com" required />
+      </div>
+      
+      <div class="space-y-2">
+        <label for="phone" class="text-sm font-semibold text-slate-700">Phone (Optional)</label>
+        <input id="phone" name="phone" class="input-shell" placeholder="+1 (555) 000-0000" />
+      </div>
+      
+      <div class="sm:col-span-2 space-y-2">
+        <label for="password" class="text-sm font-semibold text-slate-700">Password</label>
+        <input id="password" name="password" type="password" class="input-shell" placeholder="••••••••" required />
+        <p class="text-[10px] text-slate-400">At least 8 characters, one uppercase, one number.</p>
+      </div>
+      
+      <div class="sm:col-span-2 flex items-center justify-between pt-4">
+        <a href="/hms/login.html" class="text-sm font-bold text-slate-600 hover:text-slate-900 transition-colors">
+          Back to Login
+        </a>
+        <button type="submit" 
+          class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3.5 px-10 rounded-2xl shadow-xl shadow-blue-200 transition-all active:scale-95">
+          Register Account
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <script>
+    document.getElementById('registerForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      // Implementation for REST API registration
+      alert('Registration successful! Redirecting to login...');
+      window.location.href = '/hms/login.html';
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,15 @@
+target/
+*.class
+.settings/
+.classpath
+.project
+.idea/
+*.iml
+.DS_Store
+node_modules/
+dist/
+build/
+.env
+.mvn/
+mvnw
+mvnw.cmd

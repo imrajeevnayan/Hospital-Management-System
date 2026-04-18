@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{hms/fragments/head :: head(${pageTitle})}"></head>
+<body class="min-h-screen bg-slate-50 text-slate-900">
+  <header th:replace="~{hms/fragments/navbar :: navbar}"></header>
+  <div class="mx-auto flex max-w-[1600px]">
+    <div th:replace="~{hms/fragments/sidebar :: sidebar(${activeMenu}, ${role})}"></div>
+    <main class="min-h-[calc(100vh-4rem)] w-full p-4 pt-6 lg:ml-72 lg:p-6">
+      <section class="mb-6 flex flex-wrap items-start justify-between gap-4">
+        <div>
+          <p class="text-sm text-slate-500">Home / Dashboard / Patient</p>
+          <h1 class="mt-1 text-2xl font-bold tracking-tight text-slate-900">Patient Dashboard</h1>
+        </div>
+        <div class="flex flex-wrap items-center gap-2"><button class="rounded-xl bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-700">Book Appointment</button></div>
+      </section>
+      <section class="grid gap-4 xl:grid-cols-3">
+  <article class="hover-lift rounded-2xl border border-slate-200 bg-white p-5 hms-shadow"><p class="text-sm text-slate-500">Upcoming Appointments</p><h3 class="mt-1 text-3xl font-bold">3</h3><ul class="mt-4 space-y-2 text-sm text-slate-600"><li class="rounded-xl bg-slate-50 p-3">Dr. Sarah Khan · Mon, 10:30 AM</li><li class="rounded-xl bg-slate-50 p-3">Dr. Ahmed Noor · Wed, 2:00 PM</li></ul></article>
+  <article class="hover-lift rounded-2xl border border-slate-200 bg-white p-5 hms-shadow"><p class="text-sm text-slate-500">Prescription Summary</p><h3 class="mt-1 text-3xl font-bold">5 Active</h3><div class="mt-4 space-y-2"><div class="flex items-center justify-between rounded-xl bg-slate-50 p-3"><span>Metformin</span><span class="badge badge-completed">On Track</span></div><div class="flex items-center justify-between rounded-xl bg-slate-50 p-3"><span>Lisinopril</span><span class="badge badge-pending">Refill Soon</span></div></div></article>
+  <article class="hover-lift rounded-2xl border border-slate-200 bg-white p-5 hms-shadow"><p class="text-sm text-slate-500">Bills Overview</p><h3 class="mt-1 text-3xl font-bold">$1,260</h3><div class="mt-4 rounded-xl bg-emerald-50 p-3 text-sm text-emerald-700">2 invoices paid this month</div><div class="mt-2 rounded-xl bg-red-50 p-3 text-sm text-red-700">1 invoice overdue</div></article>
+</section>
+    </main>
+  </div>
+  <script th:src="@{/hms/assets/hms.js}" src="/hms/assets/hms.js"></script>
+</body>
+</html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{hms/fragments/head :: head(${pageTitle})}"></head>
+<body class="min-h-screen text-slate-900">
+  <header th:replace="~{hms/fragments/navbar :: navbar}"></header>
+  <div class="mx-auto flex max-w-[1600px]">
+    <div th:replace="~{hms/fragments/sidebar :: sidebar(${activeMenu}, ${role})}"></div>
+    <main class="min-h-[calc(100vh-4rem)] w-full p-4 pt-6 lg:ml-72 lg:p-6">
+      <section class="mb-6 flex flex-wrap items-start justify-between gap-4">
+        <div><p class="text-sm text-slate-500">Home / Patients</p><h1 class="mt-1 text-2xl font-bold tracking-tight">Patient Directory</h1></div>
+        <div class="flex flex-wrap items-center gap-2"><button class="btn-ghost text-sm">Import</button><button class="btn-primary text-sm">Add Patient</button></div>
+      </section>
+      <section class="panel hms-shadow p-5">
+        <div class="mb-4 flex flex-wrap gap-2"><input id="patientSearch" class="input-shell sm:max-w-xs" placeholder="Search patient" /><select id="patientFilter" class="input-shell sm:w-44"><option value="all">All Wards</option><option value="cardiology">Cardiology</option><option value="er">ER</option><option value="icu">ICU</option></select></div>
+        <div data-pagination data-per-page="5"><div class="overflow-x-auto"><table class="min-w-full text-sm"><thead><tr class="text-left text-slate-500"><th class="pb-3">ID</th><th class="pb-3">Name</th><th class="pb-3">Age</th><th class="pb-3">Ward</th><th class="pb-3">Status</th></tr></thead><tbody class="divide-y divide-slate-100"><tr data-patient-row data-page-item data-search="PT-1045 Eva Brooks cardiology admitted" data-ward="cardiology"><td class="py-3">PT-1045</td><td>Eva Brooks</td><td>32</td><td>Cardiology</td><td><span class="badge badge-confirmed">Admitted</span></td></tr><tr data-patient-row data-page-item data-search="PT-1046 John Miles er observation" data-ward="er"><td class="py-3">PT-1046</td><td>John Miles</td><td>47</td><td>ER</td><td><span class="badge badge-pending">Observation</span></td></tr><tr data-patient-row data-page-item data-search="PT-1047 Tina Roy icu critical" data-ward="icu"><td class="py-3">PT-1047</td><td>Tina Roy</td><td>64</td><td>ICU</td><td><span class="badge badge-cancelled">Critical</span></td></tr><tr data-patient-row data-page-item data-search="PT-1048 Arif Khan cardiology stable" data-ward="cardiology"><td class="py-3">PT-1048</td><td>Arif Khan</td><td>52</td><td>Cardiology</td><td><span class="badge badge-completed">Stable</span></td></tr><tr data-patient-row data-page-item data-search="PT-1049 Mona Das er triage" data-ward="er"><td class="py-3">PT-1049</td><td>Mona Das</td><td>38</td><td>ER</td><td><span class="badge badge-pending">Triage</span></td></tr><tr data-patient-row data-page-item data-search="PT-1050 Ryan Cole icu monitored" data-ward="icu"><td class="py-3">PT-1050</td><td>Ryan Cole</td><td>44</td><td>ICU</td><td><span class="badge badge-confirmed">Monitored</span></td></tr></tbody></table></div><div id="patientEmptyState" class="mt-4 hidden rounded-xl border border-dashed border-slate-300 p-8 text-center"><p class="font-medium text-slate-700">No patients match your filters</p><p class="text-sm text-slate-500">Try different keywords or ward filter.</p></div><div class="mt-4 flex items-center justify-between text-sm"><p data-page-total class="text-slate-500">Page 1 of 1</p><div class="flex gap-2"><button data-page-prev class="btn-ghost">Prev</button><button data-page-next class="btn-ghost">Next</button></div></div></div>
+      </section>
+
+    </main>
+  </div>
+  <div class="toast" data-toast></div>
+  <script th:src="@{/hms/assets/hms.js}" src="/hms/assets/hms.js"></script>
+</body>
+</html>

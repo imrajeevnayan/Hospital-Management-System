@@ -127,54 +127,6 @@ For a more polished look, replace placeholders with free stock UI mockups from s
 
 **Pro Tip**: Customize placeholders with colors (e.g., hex codes for healthcare blue tones) and text. For themed images, use `https://loremflickr.com/1200/700/dashboard,medical,hospital` (randomizes relevant photos). To make permanent, download and commit to `/images/` folder in your repo.
 
-## 🚀 Quick Start
-
-### Prerequisites
-- Java 17+
-- MySQL 8.0+
-- Maven 3.8+
-- IDE (IntelliJ IDEA/Eclipse)
-
-### 1. Clone and Setup
-```bash
-# The project is ready to run - all files are in /workspace
-cd /workspace
-```
-
-### 2. Database Setup
-```sql
--- Create database
-CREATE DATABASE hms;
-
--- Create user (or use existing)
-CREATE USER 'hms_user'@'localhost' IDENTIFIED BY 'hms_password';
-GRANT ALL PRIVILEGES ON hms.* TO 'hms_user'@'localhost';
-FLUSH PRIVILEGES;
-```
-
-### 3. Configuration
-Update `src/main/resources/application.yml`:
-```yaml
-spring:
-  datasource:
-    url: jdbc:mysql://localhost:3306/hms?useSSL=false&serverTimezone=UTC
-    username: your_mysql_username
-    password: your_mysql_password
-```
-
-### 4. Run the Application
-```bash
-# Build and run
-./mvnw spring-boot:run
-
-# Or using Maven
-mvn clean compile
-mvn spring-boot:run
-```
-
-### 5. Access the Application
-- **URL**: http://localhost:8080/hms
-- **Default Port**: 8080
 
 ## 👥 Demo Accounts
 
@@ -188,51 +140,33 @@ mvn spring-boot:run
 ## 📁 Project Structure
 
 ```
-/workspace/
-├── src/main/java/com/hms/
-│   ├── HospitalManagementSystemApplication.java
-│   ├── config/
-│   │   └── SecurityConfig.java
-│   ├── entity/
-│   │   ├── BaseEntity.java
-│   │   ├── User.java
-│   │   ├── Patient.java
-│   │   ├── Appointment.java
-│   │   ├── MedicalRecord.java
-│   │   ├── Prescription.java
-│   │   ├── Bill.java
-│   │   └── Department.java
-│   ├── repository/
-│   │   ├── UserRepository.java
-│   │   ├── PatientRepository.java
-│   │   ├── AppointmentRepository.java
-│   │   ├── MedicalRecordRepository.java
-│   │   ├── PrescriptionRepository.java
-│   │   ├── BillRepository.java
-│   │   └── DepartmentRepository.java
-│   ├── service/
-│   │   ├── UserService.java
-│   │   ├── AppointmentService.java
-│   │   ├── MedicalRecordService.java
-│   │   ├── PrescriptionService.java
-│   │   └── BillService.java
-│   ├── controller/
-│   │   ├── HomeController.java
-│   │   └── PatientController.java
-│   └── security/
-│       ├── CustomUserDetailsService.java
-│       ├── CustomUserDetails.java
-│       └── RestAuthenticationEntryPoint.java
-├── src/main/resources/
-│   ├── application.yml
-│   ├── schema.sql
-│   ├── data.sql
-│   └── templates/
-│       ├── layouts/
-│       │   └── base.html
-│       └── *.html (view templates)
-└── pom.xml
+/HMS/
+├── backend/               # Spring Boot REST API
+│   ├── src/main/java/     # Java source code
+│   ├── src/main/resources/ # Configuration & static assets
+│   └── pom.xml            # Maven configuration
+├── frontend/              # Modern React/Vite UI
+│   ├── public/            # Static assets
+│   ├── src/               # React components & logic
+│   └── package.json       # Node dependencies
+└── README.md              # Project documentation
 ```
+
+## 🚀 Quick Start
+
+### 1. Backend Setup (Spring Boot)
+```bash
+cd backend
+mvn clean spring-boot:run
+```
+
+### 2. Frontend Setup (React/Vite)
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
 
 ## 🔧 Configuration
 
