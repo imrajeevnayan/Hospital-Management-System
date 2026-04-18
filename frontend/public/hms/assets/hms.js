@@ -110,26 +110,52 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('form[data-toast-message]').forEach((form) => {
         form.addEventListener('submit', (e) => {
             e.preventDefault();
-            showToast(form.getAttribute('data-toast-message'));
+            const message = form.getAttribute('data-toast-message');
+            showToast(message, 'success');
+            
             const modal = form.closest('[data-modal]');
             if (modal) {
                 modal.classList.add('hidden');
                 modal.classList.remove('flex');
             }
+            form.reset();
         });
     });
 
-    // Specific Appointment Form logic
-    const appointmentForm = document.getElementById('appointmentForm');
-    if (appointmentForm) {
-        appointmentForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            showToast('Appointment Request Sent!', 'success');
-            const modal = appointmentForm.closest('[data-modal]');
-            if (modal) {
-                modal.classList.add('hidden');
-                modal.classList.remove('flex');
+    // Patient Search & Filter logic
+    const patientSearch = document.getElementById('patientSearch');
+    const patientFilter = document.getElementById('patientFilter');
+    const patientRows = document.querySelectorAll('[data-patient-row]');
+    const emptyState = document.getElementById('patientEmptyState');
+
+    if (patientSearch || patientFilter) {
+        const filterPatients = () => {
+            const query = patientSearch?.value.toLowerCase() || '';
+            const ward = patientFilter?.value || 'all';
+            let visibleCount = 0;
+
+            patientRows.forEach(row => {
+                const text = row.getAttribute('data-search').toLowerCase();
+                const rowWard = row.getAttribute('data-ward');
+                
+                const matchesSearch = text.includes(query);
+                const matchesWard = ward === 'all' || rowWard === ward;
+
+                if (matchesSearch && matchesWard) {
+                    row.classList.remove('hidden');
+                    visibleCount++;
+                } else {
+                    row.classList.add('hidden');
+                }
+            });
+
+            if (emptyState) {
+                if (visibleCount === 0) emptyState.classList.remove('hidden');
+                else emptyState.classList.add('hidden');
             }
-        });
+        };
+
+        patientSearch?.addEventListener('input', filterPatients);
+        patientFilter?.addEventListener('change', filterPatients);
     }
 });

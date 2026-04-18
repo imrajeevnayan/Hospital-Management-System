@@ -12,6 +12,29 @@
 
 **HealthSync HMS is a sleek, decoupled application that makes hospital management effortless and secure.**
 
+---
+
+## ✨ Portal Gallery (Visual Tour)
+
+<div align="center">
+
+### 🖥️ Clinical Dashboards
+| Admin Control Center | Doctor's Workspace | Patient Portal |
+| :---: | :---: | :---: |
+| ![Admin Dashboard](docs/screenshots/admin-dashboard.png) | ![Doctor Dashboard](docs/screenshots/doctor-dashboard.png) | ![Patient Dashboard](docs/screenshots/patient-dashboard.png) |
+
+### 🏥 Management Modules
+| Appointment Hub | Patient Registry | Financial Billing |
+| :---: | :---: | :---: |
+| ![Appointments](docs/screenshots/appointments.png) | ![Patient Registry](docs/screenshots/patients.png) | ![Billing](docs/screenshots/billing.png) |
+
+### 🔐 Gateway & Onboarding
+| Secure Login | Professional Signup |
+| :---: | :---: |
+| ![Login](docs/screenshots/login.png) | ![Registration](docs/screenshots/register.png) |
+
+</div>
+
 </div>
 
 ---

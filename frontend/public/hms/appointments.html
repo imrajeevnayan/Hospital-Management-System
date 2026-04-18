@@ -122,7 +122,15 @@
                             </div>
                             <div class="space-y-2">
                                 <label class="text-xs font-bold text-slate-400 uppercase ml-1">Assigned Physician</label>
-                                <input id="doctorName" class="w-full rounded-2xl border-slate-100 bg-slate-50 px-4 py-3.5 text-sm font-medium outline-none focus:bg-white focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500" placeholder="Dr. Sarah Khan" data-required="true" />
+                                <select id="doctorName" class="w-full rounded-2xl border-slate-100 bg-slate-50 px-4 py-3.5 text-sm font-bold outline-none focus:bg-white appearance-none text-slate-700" data-required="true">
+                                    <option value="">Select Doctor</option>
+                                    <option value="1">Dr. John Doe (General Medicine)</option>
+                                    <option value="2">Dr. Michael Chen (Cardiology)</option>
+                                    <option value="3">Dr. Sarah Wilson (Surgery)</option>
+                                    <option value="4">Dr. Emily Brown (Neurology)</option>
+                                    <option value="5">Dr. Robert Miller (Pediatrics)</option>
+                                    <option value="6">Dr. Jessica Taylor (Orthopedics)</option>
+                                </select>
                             </div>
                             <div class="space-y-2">
                                 <label class="text-xs font-bold text-slate-400 uppercase ml-1">Visit Date</label>
@@ -151,6 +159,54 @@
                     </form>
                 </div>
             </div>
+            <!-- Appointments List -->
+            <section class="mt-12 bg-white rounded-[2.5rem] border border-slate-100 p-8 shadow-sm hms-shadow">
+                <div class="flex items-center justify-between mb-8">
+                    <div>
+                        <h3 class="text-xl font-bold text-slate-900">Patient Registry / <span class="text-blue-600">My Appointments</span></h3>
+                        <p class="text-xs font-bold text-slate-400 mt-1 uppercase tracking-widest">Tracking your upcoming and history consultations</p>
+                    </div>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left">
+                        <thead>
+                            <tr class="border-b border-slate-50 text-[10px] font-bold text-slate-400 uppercase tracking-widest">
+                                <th class="px-4 pb-4">Physician</th>
+                                <th class="px-4 pb-4">Date & Time</th>
+                                <th class="px-4 pb-4">Department</th>
+                                <th class="px-4 pb-4">Status</th>
+                                <th class="px-4 pb-4 text-right">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-50" id="appointmentsTableBody">
+                            <!-- Example Row -->
+                            <tr class="group hover:bg-slate-50/50 transition-all">
+                                <td class="px-4 py-6">
+                                    <div class="flex items-center gap-4">
+                                        <div class="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center text-blue-600 font-bold text-xs">JD</div>
+                                        <div>
+                                            <p class="text-sm font-black text-slate-900 leading-tight">Dr. John Doe</p>
+                                            <p class="text-[10px] font-bold text-slate-400">Cardiology Specialist</p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-4 py-6">
+                                    <p class="text-sm font-bold text-slate-900">April 25, 2026</p>
+                                    <p class="text-[10px] font-bold text-slate-400 uppercase">10:30 AM</p>
+                                </td>
+                                <td class="px-4 py-6 font-bold text-xs text-slate-600">Cardiology</td>
+                                <td class="px-4 py-6"><span class="badge badge-confirmed">Scheduled</span></td>
+                                <td class="px-4 py-6 text-right">
+                                    <button class="w-9 h-9 rounded-lg border border-slate-200 flex items-center justify-center text-slate-400 hover:text-red-600 hover:border-red-100 transition-all">
+                                        <i data-lucide="calendar-x" class="w-4 h-4"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
         </main>
     </div>
 
