@@ -2,15 +2,18 @@ package com.hms.security;
 
 import com.hms.entity.User;
 import com.hms.service.UserService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+
 @Service
-@RequiredArgsConstructor
 public class CustomUserDetailsService implements UserDetailsService {
     
     private final UserService userService;
+
+    public CustomUserDetailsService(UserService userService) {
+        this.userService = userService;
+    }
     
     @Override
     public CustomUserDetails loadUserByUsername(String email) throws UsernameNotFoundException {

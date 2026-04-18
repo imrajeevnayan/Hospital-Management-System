@@ -2,8 +2,8 @@ package com.hms.service;
 
 import com.hms.entity.Bill;
 import com.hms.repository.BillRepository;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -13,12 +13,16 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+
 @Service
-@RequiredArgsConstructor
-@Slf4j
 public class BillService {
     
+    private static final Logger log = LoggerFactory.getLogger(BillService.class);
     private final BillRepository billRepository;
+
+    public BillService(BillRepository billRepository) {
+        this.billRepository = billRepository;
+    }
     
     @Transactional(readOnly = true)
     public Optional<Bill> findById(Long id) {
@@ -68,7 +72,7 @@ public class BillService {
                         bill.setPaymentStatus(Bill.PaymentStatus.PARTIALLY_PAID);
                         bill.setStatus(Bill.BillStatus.PARTIALLY_PAID);
                     }
-                    bill.setPaymentDate(LocalDate.now());
+                    bill.setPaymentDate(java.time.LocalDateTime.now());
                     bill.setPaymentMethod(paymentMethod);
                     bill.setPaymentReference(paymentReference);
                     return billRepository.save(bill);

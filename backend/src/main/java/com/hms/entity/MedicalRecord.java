@@ -1,16 +1,10 @@
 package com.hms.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
-
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+
 @Entity
 @Table(name = "medical_records")
-@Data
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
 public class MedicalRecord extends BaseEntity {
     
     @ManyToOne(fetch = FetchType.LAZY)
@@ -109,7 +103,73 @@ public class MedicalRecord extends BaseEntity {
     
     @Column(name = "is_confidential", nullable = false)
     private Boolean isConfidential = false;
-    
+
+    public MedicalRecord() {}
+
+    public Patient getPatient() { return patient; }
+    public void setPatient(Patient patient) { this.patient = patient; }
+    public User getDoctor() { return doctor; }
+    public void setDoctor(User doctor) { this.doctor = doctor; }
+    public Appointment getAppointment() { return appointment; }
+    public void setAppointment(Appointment appointment) { this.appointment = appointment; }
+    public LocalDate getRecordDate() { return recordDate; }
+    public void setRecordDate(LocalDate recordDate) { this.recordDate = recordDate; }
+    public RecordType getRecordType() { return recordType; }
+    public void setRecordType(RecordType recordType) { this.recordType = recordType; }
+    public String getChiefComplaint() { return chiefComplaint; }
+    public void setChiefComplaint(String chiefComplaint) { this.chiefComplaint = chiefComplaint; }
+    public String getPresentIllness() { return presentIllness; }
+    public void setPresentIllness(String presentIllness) { this.presentIllness = presentIllness; }
+    public String getMedicalHistory() { return medicalHistory; }
+    public void setMedicalHistory(String medicalHistory) { this.medicalHistory = medicalHistory; }
+    public String getFamilyHistory() { return familyHistory; }
+    public void setFamilyHistory(String familyHistory) { this.familyHistory = familyHistory; }
+    public String getSocialHistory() { return socialHistory; }
+    public void setSocialHistory(String socialHistory) { this.socialHistory = socialHistory; }
+    public String getAllergies() { return allergies; }
+    public void setAllergies(String allergies) { this.allergies = allergies; }
+    public String getMedications() { return medications; }
+    public void setMedications(String medications) { this.medications = medications; }
+    public String getPhysicalExamination() { return physicalExamination; }
+    public void setPhysicalExamination(String physicalExamination) { this.physicalExamination = physicalExamination; }
+    public String getVitalSigns() { return vitalSigns; }
+    public void setVitalSigns(String vitalSigns) { this.vitalSigns = vitalSigns; }
+    public Double getWeight() { return weight; }
+    public void setWeight(Double weight) { this.weight = weight; }
+    public Double getHeight() { return height; }
+    public void setHeight(Double height) { this.height = height; }
+    public Integer getBloodPressureSystolic() { return bloodPressureSystolic; }
+    public void setBloodPressureSystolic(Integer bloodPressureSystolic) { this.bloodPressureSystolic = bloodPressureSystolic; }
+    public Integer getBloodPressureDiastolic() { return bloodPressureDiastolic; }
+    public void setBloodPressureDiastolic(Integer bloodPressureDiastolic) { this.bloodPressureDiastolic = bloodPressureDiastolic; }
+    public Integer getHeartRate() { return heartRate; }
+    public void setHeartRate(Integer heartRate) { this.heartRate = heartRate; }
+    public Double getTemperature() { return temperature; }
+    public void setTemperature(Double temperature) { this.temperature = temperature; }
+    public Integer getRespiratoryRate() { return respiratoryRate; }
+    public void setRespiratoryRate(Integer respiratoryRate) { this.respiratoryRate = respiratoryRate; }
+    public Double getOxygenSaturation() { return oxygenSaturation; }
+    public void setOxygenSaturation(Double oxygenSaturation) { this.oxygenSaturation = oxygenSaturation; }
+    public String getLaboratoryTests() { return laboratoryTests; }
+    public void setLaboratoryTests(String laboratoryTests) { this.laboratoryTests = laboratoryTests; }
+    public String getImagingStudies() { return imagingStudies; }
+    public void setImagingStudies(String imagingStudies) { this.imagingStudies = imagingStudies; }
+    public String getProcedures() { return procedures; }
+    public void setProcedures(String procedures) { this.procedures = procedures; }
+    public String getAssessment() { return assessment; }
+    public void setAssessment(String assessment) { this.assessment = assessment; }
+    public String getPlan() { return plan; }
+    public void setPlan(String plan) { this.plan = plan; }
+    public String getFollowUpInstructions() { return followUpInstructions; }
+    public void setFollowUpInstructions(String followUpInstructions) { this.followUpInstructions = followUpInstructions; }
+    public LocalDate getNextAppointmentDate() { return nextAppointmentDate; }
+    public void setNextAppointmentDate(LocalDate nextAppointmentDate) { this.nextAppointmentDate = nextAppointmentDate; }
+    public String getProgressNotes() { return progressNotes; }
+    public void setProgressNotes(String progressNotes) { this.progressNotes = progressNotes; }
+    public Boolean getIsConfidential() { return isConfidential; }
+    public void setIsConfidential(Boolean isConfidential) { this.isConfidential = isConfidential; }
+
+
     public double getBMI() {
         if (height != null && weight != null && height > 0) {
             return weight / ((height / 100) * (height / 100));
@@ -125,7 +185,7 @@ public class MedicalRecord extends BaseEntity {
     }
     
     public boolean isUrgent() {
-        return isConfidential != null && isConfidential;
+        return (isConfidential != null && isConfidential);
     }
     
     public enum RecordType {

@@ -6,8 +6,6 @@ import com.hms.security.CustomUserDetails;
 import com.hms.service.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import lombok.Data;
-import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -21,9 +19,9 @@ import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+
 @RestController
 @RequestMapping("/hms/api/patient")
-@RequiredArgsConstructor
 public class PatientController {
     
     private final UserService userService;
@@ -32,106 +30,101 @@ public class PatientController {
     private final MedicalRecordService medicalRecordService;
     private final PrescriptionService prescriptionService;
     private final BillService billService;
+
+    public PatientController(UserService userService, PatientRepository patientRepository, 
+                            AppointmentService appointmentService, MedicalRecordService medicalRecordService, 
+                            PrescriptionService prescriptionService, BillService billService) {
+        this.userService = userService;
+        this.patientRepository = patientRepository;
+        this.appointmentService = appointmentService;
+        this.medicalRecordService = medicalRecordService;
+        this.prescriptionService = prescriptionService;
+        this.billService = billService;
+    }
     
     @GetMapping("/dashboard")
-    public ResponseEntity<Map<String, Object>> patientDashboard(Authentication authentication) {
+    public ResponseEntity<?> getDashboardData(Authentication authentication) {
         CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
-        User patient = userService.findById(userDetails.getId()).orElse(null);
+        Long patientId = userDetails.getId();
         
-        if (patient == null) {
-            return ResponseEntity.status(401).build();
-        }
+        Map<String, Object> dashboardData = new HashMap<>();
         
-        Map<String, Object> data = new HashMap<>();
-        data.put("patient", patient);
-        data.put("recentAppointments", appointmentService.getRecentAppointmentsForPatient(patient.getId(), 5));
-        data.put("recentRecords", medicalRecordService.getRecentMedicalRecordsForPatient(patient.getId(), 5));
-        data.put("recentPrescriptions", prescriptionService.getRecentPrescriptionsForPatient(patient.getId(), 5));
+        // Recent appointments
+        dashboardData.put("recentAppointments", appointmentService.getRecentAppointmentsForPatient(patientId, 5));
         
-        Optional<BigDecimal> outstandingAmount = billService.getOutstandingAmountForPatient(patient.getId());
-        data.put("outstandingAmount", outstandingAmount.orElse(BigDecimal.ZERO));
-        data.put("currentDate", LocalDate.now());
+        // Recent medical records
+        dashboardData.put("recentRecords", medicalRecordService.getRecentMedicalRecordsForPatient(patientId, 5));
         
-        return ResponseEntity.ok(data);
+        // Recent prescriptions
+        dashboardData.put("recentPrescriptions", prescriptionService.getRecentPrescriptionsForPatient(patientId, 5));
+        
+        // Outstanding bill amount
+        dashboardData.put("outstandingAmount", billService.getOutstandingAmountForPatient(patientId).orElse(BigDecimal.ZERO));
+        
+        return ResponseEntity.ok(dashboardData);
     }
     
     @GetMapping("/appointments")
-    public ResponseEntity<Page<Appointment>> patientAppointments(Authentication authentication,
-                                                               @RequestParam(defaultValue = "0") int page,
-                                                               @RequestParam(defaultValue = "10") int size) {
+    public ResponseEntity<Page<Appointment>> getAppointments(
+            Authentication authentication,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "appointmentDate,desc") String sort) {
         
         CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
-        Pageable pageable = PageRequest.of(page, size, Sort.by("appointmentDate").descending().and(Sort.by("appointmentTime").descending()));
+        Pageable pageable = PageRequest.of(page, size, Sort.by(sort.split(",")[0]).descending());
+        
         return ResponseEntity.ok(appointmentService.getAppointmentsForPatient(userDetails.getId(), pageable));
     }
     
-    @GetMapping("/medical-records")
-    public ResponseEntity<Page<MedicalRecord>> patientMedicalRecords(Authentication authentication,
-                                                                  @RequestParam(defaultValue = "0") int page,
-                                                                  @RequestParam(defaultValue = "10") int size) {
+    @PostMapping("/appointments/book")
+    public ResponseEntity<?> bookAppointment(
+            Authentication authentication,
+            @RequestBody AppointmentRequest request) {
         
         CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
-        Pageable pageable = PageRequest.of(page, size, Sort.by("recordDate").descending());
-        return ResponseEntity.ok(medicalRecordService.getMedicalRecordsForPatient(userDetails.getId(), pageable));
-    }
-    
-    @GetMapping("/prescriptions")
-    public ResponseEntity<Page<Prescription>> patientPrescriptions(Authentication authentication,
-                                                                 @RequestParam(defaultValue = "0") int page,
-                                                                 @RequestParam(defaultValue = "10") int size) {
         
-        CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
-        Pageable pageable = PageRequest.of(page, size, Sort.by("prescriptionDate").descending());
-        return ResponseEntity.ok(prescriptionService.getPrescriptionsForPatient(userDetails.getId(), pageable));
-    }
-    
-    @GetMapping("/bills")
-    public ResponseEntity<Page<Bill>> patientBills(Authentication authentication,
-                                                 @RequestParam(defaultValue = "0") int page,
-                                                 @RequestParam(defaultValue = "10") int size) {
+        User patientUser = userService.findById(userDetails.getId())
+                .orElseThrow(() -> new RuntimeException("Patient user not found"));
         
-        CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
-        Pageable pageable = PageRequest.of(page, size, Sort.by("billDate").descending());
-        return ResponseEntity.ok(billService.getBillsForPatient(userDetails.getId(), pageable));
-    }
-    
-    @GetMapping("/profile")
-    public ResponseEntity<User> patientProfile(Authentication authentication) {
-        CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
-        return userService.findById(userDetails.getId()).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
-    }
-    
-    @PostMapping("/book-appointment")
-    public ResponseEntity<Map<String, String>> bookAppointment(Authentication authentication,
-                                                              @RequestBody AppointmentRequest request) {
-        
-        CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
-        User user = userService.findById(userDetails.getId()).orElse(null);
-        Patient patient = patientRepository.findByUser(user);
-        User doctor = userService.findById(request.getDoctorId()).orElse(null);
-        
-        Map<String, String> response = new HashMap<>();
-        try {
-            appointmentService.bookAppointment(patient, doctor, request.getAppointmentDate(), request.getAppointmentTime(), request.getReason(), request.getNotes());
-            response.put("message", "Appointment booked successfully!");
-            return ResponseEntity.ok(response);
-        } catch (Exception e) {
-            response.put("error", "Failed to book appointment: " + e.getMessage());
-            return ResponseEntity.badRequest().body(response);
+        Patient patient = patientRepository.findByUser(patientUser);
+        if (patient == null) {
+            throw new RuntimeException("Patient record not found");
         }
+                
+        User doctor = userService.findById(request.getDoctorId())
+                .orElseThrow(() -> new RuntimeException("Doctor not found"));
+        
+        Appointment appointment = appointmentService.bookAppointment(
+                patient,
+                doctor,
+                request.getAppointmentDate(),
+                request.getAppointmentTime(),
+                request.getReason(),
+                request.getNotes()
+        );
+        
+        return ResponseEntity.ok(appointment);
     }
-
-    @Data
+    
     public static class AppointmentRequest {
-        @NotNull
-        private Long doctorId;
-        @NotNull
-        private LocalDate appointmentDate;
-        @NotNull
-        private String appointmentTime;
-        @NotBlank
-        private String reason;
+        @NotNull private Long doctorId;
+        @NotNull private LocalDate appointmentDate;
+        @NotBlank private String appointmentTime;
+        @NotBlank private String reason;
         private String notes;
+
+        public AppointmentRequest() {}
+
+        public Long getDoctorId() { return doctorId; }
+        public void setDoctorId(Long doctorId) { this.doctorId = doctorId; }
+        public LocalDate getAppointmentDate() { return appointmentDate; }
+        public void setAppointmentDate(LocalDate appointmentDate) { this.appointmentDate = appointmentDate; }
+        public String getAppointmentTime() { return appointmentTime; }
+        public void setAppointmentTime(String appointmentTime) { this.appointmentTime = appointmentTime; }
+        public String getReason() { return reason; }
+        public void setReason(String reason) { this.reason = reason; }
+        public String getNotes() { return notes; }
+        public void setNotes(String notes) { this.notes = notes; }
     }
-}
 }

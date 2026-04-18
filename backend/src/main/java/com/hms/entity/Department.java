@@ -1,17 +1,9 @@
 package com.hms.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
-
-import java.util.List;
-
 
 @Entity
 @Table(name = "departments")
-@Data
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
 public class Department extends BaseEntity {
     
     @Column(name = "department_name", length = 100, nullable = false, unique = true)
@@ -32,41 +24,17 @@ public class Department extends BaseEntity {
     @Column(name = "contact_number", length = 20)
     private String contactNumber;
     
-    @Column(name = "email", length = 255)
+    @Column(name = "email", length = 100)
     private String email;
     
-    @Column(name = "head_of_department_id")
-    private Long headOfDepartmentId;
-    
-    @Column(name = "is_emergency_department", nullable = false)
-    private Boolean isEmergencyDepartment = false;
-    
-    @Column(name = "is_surgical", nullable = false)
-    private Boolean isSurgical = false;
-    
-    @Column(name = "operating_hours_start", length = 8)
-    private String operatingHoursStart;
-    
-    @Column(name = "operating_hours_end", length = 8)
-    private String operatingHoursEnd;
-    
-    @Column(name = "working_days", length = 50)
-    private String workingDays;
+    @Column(name = "head_of_department", length = 100)
+    private String headOfDepartment;
     
     @Column(name = "total_beds")
     private Integer totalBeds;
     
     @Column(name = "available_beds")
     private Integer availableBeds;
-    
-    @Column(name = "icu_beds")
-    private Integer icuBeds;
-    
-    @Column(name = "emergency_beds")
-    private Integer emergencyBeds;
-    
-    @Column(name = "specialties", length = 1000)
-    private String specialties;
     
     @Column(name = "services", length = 2000)
     private String services;
@@ -80,8 +48,46 @@ public class Department extends BaseEntity {
     @Column(name = "nurses_count", nullable = false)
     private Integer nursesCount = 0;
     
+    @Column(name = "is_emergency_department", nullable = false)
+    private Boolean isEmergencyDepartment = false;
+    
     @Column(name = "is_active_department", nullable = false)
     private Boolean isActiveDepartment = true;
+
+    public Department() {}
+
+    public String getDepartmentName() { return departmentName; }
+    public void setDepartmentName(String departmentName) { this.departmentName = departmentName; }
+    public String getDescription() { return description; }
+    public void setDescription(String description) { this.description = description; }
+    public String getLocation() { return location; }
+    public void setLocation(String location) { this.location = location; }
+    public Integer getFloorNumber() { return floorNumber; }
+    public void setFloorNumber(Integer floorNumber) { this.floorNumber = floorNumber; }
+    public String getBuilding() { return building; }
+    public void setBuilding(String building) { this.building = building; }
+    public String getContactNumber() { return contactNumber; }
+    public void setContactNumber(String contactNumber) { this.contactNumber = contactNumber; }
+    public String getEmail() { return email; }
+    public void setEmail(String email) { this.email = email; }
+    public String getHeadOfDepartment() { return headOfDepartment; }
+    public void setHeadOfDepartment(String headOfDepartment) { this.headOfDepartment = headOfDepartment; }
+    public Integer getTotalBeds() { return totalBeds; }
+    public void setTotalBeds(Integer totalBeds) { this.totalBeds = totalBeds; }
+    public Integer getAvailableBeds() { return availableBeds; }
+    public void setAvailableBeds(Integer availableBeds) { this.availableBeds = availableBeds; }
+    public String getServices() { return services; }
+    public void setServices(String services) { this.services = services; }
+    public String getEquipment() { return equipment; }
+    public void setEquipment(String equipment) { this.equipment = equipment; }
+    public Integer getDoctorsCount() { return doctorsCount; }
+    public void setDoctorsCount(Integer doctorsCount) { this.doctorsCount = doctorsCount; }
+    public Integer getNursesCount() { return nursesCount; }
+    public void setNursesCount(Integer nursesCount) { this.nursesCount = nursesCount; }
+    public Boolean getIsEmergencyDepartment() { return isEmergencyDepartment; }
+    public void setIsEmergencyDepartment(Boolean isEmergencyDepartment) { this.isEmergencyDepartment = isEmergencyDepartment; }
+    public Boolean getIsActiveDepartment() { return isActiveDepartment; }
+    public void setIsActiveDepartment(Boolean isActiveDepartment) { this.isActiveDepartment = isActiveDepartment; }
     
     public boolean hasAvailableBeds() {
         return availableBeds != null && availableBeds > 0;
@@ -98,7 +104,6 @@ public class Department extends BaseEntity {
     }
     
     public boolean isOpen() {
-        // This would need to be enhanced with actual time checking
-        return isActiveDepartment;
+        return isActiveDepartment != null && isActiveDepartment;
     }
 }

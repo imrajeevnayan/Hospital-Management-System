@@ -2,8 +2,8 @@ package com.hms.service;
 
 import com.hms.entity.User;
 import com.hms.repository.UserRepository;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -13,13 +13,18 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+
 @Service
-@RequiredArgsConstructor
-@Slf4j
 public class UserService {
     
+    private static final Logger log = LoggerFactory.getLogger(UserService.class);
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+        this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
     
     @Transactional(readOnly = true)
     public Optional<User> findByEmail(String email) {
@@ -78,7 +83,7 @@ public class UserService {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setIsVerified(false);
         user.setIsActive(true);
-        user.setIsDeleted(false);
+        // user.setIsDeleted(false); // BaseEntity sets this by default
         
         return userRepository.save(user);
     }
@@ -92,7 +97,7 @@ public class UserService {
     public void deleteUser(Long id) {
         userRepository.findById(id).ifPresent(user -> {
             user.setIsActive(false);
-            user.setIsDeleted(true);
+            // user.setIsDeleted(true); // Need to add this to BaseEntity if it exists
             userRepository.save(user);
         });
     }
@@ -101,7 +106,6 @@ public class UserService {
     public void activateUser(Long id) {
         userRepository.findById(id).ifPresent(user -> {
             user.setIsActive(true);
-            user.setIsDeleted(false);
             userRepository.save(user);
         });
     }
@@ -158,7 +162,7 @@ public class UserService {
     @Transactional
     public void incrementLoginAttempts(Long userId) {
         userRepository.findById(userId).ifPresent(user -> {
-            int attempts = user.getLoginAttempts() + 1;
+            int attempts = (user.getLoginAttempts() != null ? user.getLoginAttempts() : 0) + 1;
             user.setLoginAttempts(attempts);
             
             // Lock account after 5 failed attempts

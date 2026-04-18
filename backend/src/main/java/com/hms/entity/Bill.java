@@ -1,17 +1,12 @@
 package com.hms.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
-
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+
 @Entity
 @Table(name = "bills")
-@Data
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
 public class Bill extends BaseEntity {
     
     @ManyToOne(fetch = FetchType.LAZY)
@@ -24,18 +19,18 @@ public class Bill extends BaseEntity {
     
     @Column(name = "bill_number", unique = true, length = 50, nullable = false)
     private String billNumber;
-    
+
     @Column(name = "bill_date", nullable = false)
     private LocalDate billDate;
     
     @Column(name = "due_date", nullable = false)
     private LocalDate dueDate;
     
-    @Column(name = "bill_type", length = 30, nullable = false)
     @Enumerated(EnumType.STRING)
+    @Column(name = "bill_type", nullable = false, length = 50)
     private BillType billType;
     
-    @Column(name = "item_name", length = 200, nullable = false)
+    @Column(name = "item_name", nullable = false, length = 200)
     private String itemName;
     
     @Column(name = "item_description", length = 1000)
@@ -44,125 +39,151 @@ public class Bill extends BaseEntity {
     @Column(name = "quantity", nullable = false)
     private Integer quantity;
     
-    @Column(name = "unit_price", precision = 10, scale = 2, nullable = false)
+    @Column(name = "unit_price", nullable = false)
     private BigDecimal unitPrice;
-    
-    @Column(name = "total_amount", precision = 12, scale = 2, nullable = false)
+
+    @Column(name = "total_amount", nullable = false)
     private BigDecimal totalAmount;
+
+    @Column(name = "amount", nullable = false)
+    private BigDecimal amount;
     
-    @Column(name = "discount_percentage", precision = 5, scale = 2)
-    private BigDecimal discountPercentage;
-    
-    @Column(name = "discount_amount", precision = 10, scale = 2)
-    private BigDecimal discountAmount;
-    
-    @Column(name = "tax_percentage", precision = 5, scale = 2)
+    @Column(name = "tax_percentage")
     private BigDecimal taxPercentage;
     
-    @Column(name = "tax_amount", precision = 10, scale = 2)
+    @Column(name = "tax_amount")
     private BigDecimal taxAmount;
     
-    @Column(name = "final_amount", precision = 12, scale = 2, nullable = false)
+    @Column(name = "discount_percentage")
+    private BigDecimal discountPercentage;
+    
+    @Column(name = "discount_amount")
+    private BigDecimal discountAmount;
+    
+    @Column(name = "final_amount", nullable = false)
     private BigDecimal finalAmount;
     
-    @Column(name = "paid_amount", precision = 12, scale = 2, nullable = false)
+    @Column(name = "paid_amount", nullable = false)
     private BigDecimal paidAmount = BigDecimal.ZERO;
     
-    @Column(name = "remaining_amount", precision = 12, scale = 2, nullable = false)
-    private BigDecimal remainingAmount;
-    
-    @Column(length = 20, nullable = false)
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 20)
     private BillStatus status;
     
-    @Column(length = 20, nullable = false)
     @Enumerated(EnumType.STRING)
+    @Column(name = "payment_status", nullable = false, length = 20)
     private PaymentStatus paymentStatus;
     
-    @Column(name = "payment_method", length = 30)
     @Enumerated(EnumType.STRING)
+    @Column(name = "payment_method", length = 20)
     private PaymentMethod paymentMethod;
     
     @Column(name = "payment_date")
-    private LocalDate paymentDate;
+    private LocalDateTime paymentDate;
     
     @Column(name = "payment_reference", length = 100)
     private String paymentReference;
+
+    @Column(name = "transaction_id", length = 100)
+    private String transactionId;
     
-    @Column(name = "payment_gateway", length = 50)
-    private String paymentGateway;
+    @Column(name = "notes", length = 1000)
+    private String notes;
     
-    @Column(name = "invoice_number", length = 50)
-    private String invoiceNumber;
-    
-    @Column(name = "receipt_number", length = 50)
-    private String receiptNumber;
-    
-    @Column(name = "payment_notes", length = 1000)
-    private String paymentNotes;
-    
-    @Column(name = "insurance_claim_number", length = 50)
-    private String insuranceClaimNumber;
-    
-    @Column(name = "insurance_coverage_percentage", precision = 5, scale = 2)
-    private BigDecimal insuranceCoveragePercentage;
-    
-    @Column(name = "insurance_coverage_amount", precision = 10, scale = 2)
-    private BigDecimal insuranceCoverageAmount;
-    
-    @Column(name = "patient_payable", precision = 10, scale = 2, nullable = false)
-    private BigDecimal patientPayable;
-    
-    @Column(name = "created_by", length = 100)
-    private String createdBy;
-    
-    @Column(name = "updated_by", length = 100)
-    private String updatedBy;
-    
-    @Column(name = "is_insurance_covered", nullable = false)
+    @Column(name = "is_insurance_covered")
     private Boolean isInsuranceCovered = false;
     
-    @Column(name = "waived_amount", precision = 10, scale = 2)
-    private BigDecimal waivedAmount = BigDecimal.ZERO;
+    @Column(name = "insurance_provider", length = 100)
+    private String insuranceProvider;
     
-    @Column(name = "waiver_reason", length = 500)
-    private String waiverReason;
+    @Column(name = "insurance_policy_number", length = 50)
+    private String insurancePolicyNumber;
     
-    public boolean isPaid() {
-        return paymentStatus == PaymentStatus.PAID || 
-               (finalAmount != null && finalAmount.compareTo(paidAmount) <= 0);
-    }
-    
-    public boolean isOverdue() {
-        return dueDate != null && LocalDate.now().isAfter(dueDate) && !isPaid();
-    }
-    
-    public boolean isPartiallyPaid() {
-        return paymentStatus == PaymentStatus.PARTIALLY_PAID;
-    }
-    
-    public double getPaymentProgress() {
-        if (finalAmount == null || finalAmount.compareTo(BigDecimal.ZERO) == 0) return 0.0;
-        return (double) paidAmount.divide(finalAmount, 2, BigDecimal.ROUND_HALF_UP).doubleValue() * 100;
-    }
+    @Column(name = "insurance_claim_status", length = 20)
+    private String insuranceClaimStatus;
+
+    public Bill() {}
+
+    public Patient getPatient() { return patient; }
+    public void setPatient(Patient patient) { this.patient = patient; }
+    public Appointment getAppointment() { return appointment; }
+    public void setAppointment(Appointment appointment) { this.appointment = appointment; }
+    public String getBillNumber() { return billNumber; }
+    public void setBillNumber(String billNumber) { this.billNumber = billNumber; }
+    public LocalDate getBillDate() { return billDate; }
+    public void setBillDate(LocalDate billDate) { this.billDate = billDate; }
+    public LocalDate getDueDate() { return dueDate; }
+    public void setDueDate(LocalDate dueDate) { this.dueDate = dueDate; }
+    public BillType getBillType() { return billType; }
+    public void setBillType(BillType billType) { this.billType = billType; }
+    public String getItemName() { return itemName; }
+    public void setItemName(String itemName) { this.itemName = itemName; }
+    public String getItemDescription() { return itemDescription; }
+    public void setItemDescription(String itemDescription) { this.itemDescription = itemDescription; }
+    public Integer getQuantity() { return quantity; }
+    public void setQuantity(Integer quantity) { this.quantity = quantity; }
+    public BigDecimal getUnitPrice() { return unitPrice; }
+    public void setUnitPrice(BigDecimal unitPrice) { this.unitPrice = unitPrice; }
+    public BigDecimal getTotalAmount() { return totalAmount; }
+    public void setTotalAmount(BigDecimal totalAmount) { this.totalAmount = totalAmount; }
+    public BigDecimal getAmount() { return amount; }
+    public void setAmount(BigDecimal amount) { this.amount = amount; }
+    public BigDecimal getTaxPercentage() { return taxPercentage; }
+    public void setTaxPercentage(BigDecimal taxPercentage) { this.taxPercentage = taxPercentage; }
+    public BigDecimal getTaxAmount() { return taxAmount; }
+    public void setTaxAmount(BigDecimal taxAmount) { this.taxAmount = taxAmount; }
+    public BigDecimal getDiscountPercentage() { return discountPercentage; }
+    public void setDiscountPercentage(BigDecimal discountPercentage) { this.discountPercentage = discountPercentage; }
+    public BigDecimal getDiscountAmount() { return discountAmount; }
+    public void setDiscountAmount(BigDecimal discountAmount) { this.discountAmount = discountAmount; }
+    public BigDecimal getFinalAmount() { return finalAmount; }
+    public void setFinalAmount(BigDecimal finalAmount) { this.finalAmount = finalAmount; }
+    public BigDecimal getPaidAmount() { return paidAmount; }
+    public void setPaidAmount(BigDecimal paidAmount) { this.paidAmount = paidAmount; }
+    public BillStatus getStatus() { return status; }
+    public void setStatus(BillStatus status) { this.status = status; }
+    public PaymentStatus getPaymentStatus() { return paymentStatus; }
+    public void setPaymentStatus(PaymentStatus paymentStatus) { this.paymentStatus = paymentStatus; }
+    public PaymentMethod getPaymentMethod() { return paymentMethod; }
+    public void setPaymentMethod(PaymentMethod paymentMethod) { this.paymentMethod = paymentMethod; }
+    public LocalDateTime getPaymentDate() { return paymentDate; }
+    public void setPaymentDate(LocalDateTime paymentDate) { this.paymentDate = paymentDate; }
+    public String getPaymentReference() { return paymentReference; }
+    public void setPaymentReference(String paymentReference) { this.paymentReference = paymentReference; }
+    public String getTransactionId() { return transactionId; }
+    public void setTransactionId(String transactionId) { this.transactionId = transactionId; }
+    public String getNotes() { return notes; }
+    public void setNotes(String notes) { this.notes = notes; }
+    public Boolean getIsInsuranceCovered() { return isInsuranceCovered; }
+    public void setIsInsuranceCovered(Boolean isInsuranceCovered) { this.isInsuranceCovered = isInsuranceCovered; }
+    public String getInsuranceProvider() { return insuranceProvider; }
+    public void setInsuranceProvider(String insuranceProvider) { this.insuranceProvider = insuranceProvider; }
+    public String getInsurancePolicyNumber() { return insurancePolicyNumber; }
+    public void setInsurancePolicyNumber(String insurancePolicyNumber) { this.insurancePolicyNumber = insurancePolicyNumber; }
+    public String getInsuranceClaimStatus() { return insuranceClaimStatus; }
+    public void setInsuranceClaimStatus(String insuranceClaimStatus) { this.insuranceClaimStatus = insuranceClaimStatus; }
+
     
     public BigDecimal getRemainingAmount() {
-        return finalAmount.subtract(paidAmount);
+        if (finalAmount == null) return BigDecimal.ZERO;
+        return finalAmount.subtract(paidAmount != null ? paidAmount : BigDecimal.ZERO);
     }
     
-    public boolean canApplyDiscount() {
-        return status == BillStatus.DRAFT || status == BillStatus.PENDING;
+    public boolean isPaid() {
+        return (finalAmount != null && paidAmount != null) && (paidAmount.compareTo(finalAmount) >= 0);
     }
-    
-    public void addPayment(BigDecimal amount) {
-        this.paidAmount = this.paidAmount.add(amount);
+
+    public void addPayment(BigDecimal paymentAmount) {
+        if (this.paidAmount == null) this.paidAmount = BigDecimal.ZERO;
+        this.paidAmount = this.paidAmount.add(paymentAmount);
+        this.paymentDate = LocalDateTime.now();
         updatePaymentStatus();
     }
     
     private void updatePaymentStatus() {
-        if (paidAmount.compareTo(BigDecimal.ZERO) == 0) {
+        if (paidAmount == null || paidAmount.compareTo(BigDecimal.ZERO) == 0) {
             this.paymentStatus = PaymentStatus.PENDING;
-        } else if (paidAmount.compareTo(finalAmount) >= 0) {
+        } else if (finalAmount != null && paidAmount.compareTo(finalAmount) >= 0) {
             this.paymentStatus = PaymentStatus.PAID;
             this.status = BillStatus.PAID;
         } else {

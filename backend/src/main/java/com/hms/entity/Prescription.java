@@ -1,17 +1,10 @@
 package com.hms.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
-
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "prescriptions")
-@Data
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
 public class Prescription extends BaseEntity {
     
     @ManyToOne(fetch = FetchType.LAZY)
@@ -119,6 +112,77 @@ public class Prescription extends BaseEntity {
     
     @Column(name = "controlled_substance_class", length = 20)
     private String controlledSubstanceClass;
+
+    public Prescription() {}
+
+    public Patient getPatient() { return patient; }
+    public void setPatient(Patient patient) { this.patient = patient; }
+    public User getDoctor() { return doctor; }
+    public void setDoctor(User doctor) { this.doctor = doctor; }
+    public Appointment getAppointment() { return appointment; }
+    public void setAppointment(Appointment appointment) { this.appointment = appointment; }
+    public LocalDate getPrescriptionDate() { return prescriptionDate; }
+    public void setPrescriptionDate(LocalDate prescriptionDate) { this.prescriptionDate = prescriptionDate; }
+    public String getMedicationName() { return medicationName; }
+    public void setMedicationName(String medicationName) { this.medicationName = medicationName; }
+    public String getGenericName() { return genericName; }
+    public void setGenericName(String genericName) { this.genericName = genericName; }
+    public String getDosage() { return dosage; }
+    public void setDosage(String dosage) { this.dosage = dosage; }
+    public String getFrequency() { return frequency; }
+    public void setFrequency(String frequency) { this.frequency = frequency; }
+    public Integer getDurationDays() { return durationDays; }
+    public void setDurationDays(Integer durationDays) { this.durationDays = durationDays; }
+    public Integer getTotalQuantity() { return totalQuantity; }
+    public void setTotalQuantity(Integer totalQuantity) { this.totalQuantity = totalQuantity; }
+    public Integer getQuantityPerDose() { return quantityPerDose; }
+    public void setQuantityPerDose(Integer quantityPerDose) { this.quantityPerDose = quantityPerDose; }
+    public String getInstructions() { return instructions; }
+    public void setInstructions(String instructions) { this.instructions = instructions; }
+    public String getSideEffects() { return sideEffects; }
+    public void setSideEffects(String sideEffects) { this.sideEffects = sideEffects; }
+    public String getContraindications() { return contraindications; }
+    public void setContraindications(String contraindications) { this.contraindications = contraindications; }
+    public String getDrugInteractions() { return drugInteractions; }
+    public void setDrugInteractions(String drugInteractions) { this.drugInteractions = drugInteractions; }
+    public Integer getRefillsAllowed() { return refillsAllowed; }
+    public void setRefillsAllowed(Integer refillsAllowed) { this.refillsAllowed = refillsAllowed; }
+    public Integer getRefillsUsed() { return refillsUsed; }
+    public void setRefillsUsed(Integer refillsUsed) { this.refillsUsed = refillsUsed; }
+    public Integer getPrescribedQuantity() { return prescribedQuantity; }
+    public void setPrescribedQuantity(Integer prescribedQuantity) { this.prescribedQuantity = prescribedQuantity; }
+    public Integer getDispensedQuantity() { return dispensedQuantity; }
+    public void setDispensedQuantity(Integer dispensedQuantity) { this.dispensedQuantity = dispensedQuantity; }
+    public LocalDate getDispensedDate() { return dispensedDate; }
+    public void setDispensedDate(LocalDate dispensedDate) { this.dispensedDate = dispensedDate; }
+    public String getDispensedBy() { return dispensedBy; }
+    public void setDispensedBy(String dispensedBy) { this.dispensedBy = dispensedBy; }
+    public PrescriptionStatus getStatus() { return status; }
+    public void setStatus(PrescriptionStatus status) { this.status = status; }
+    public LocalDate getStartDate() { return startDate; }
+    public void setStartDate(LocalDate startDate) { this.startDate = startDate; }
+    public LocalDate getEndDate() { return endDate; }
+    public void setEndDate(LocalDate endDate) { this.endDate = endDate; }
+    public String getStopReason() { return stopReason; }
+    public void setStopReason(String stopReason) { this.stopReason = stopReason; }
+    public LocalDate getStopDate() { return stopDate; }
+    public void setStopDate(LocalDate stopDate) { this.stopDate = stopDate; }
+    public String getPharmacyName() { return pharmacyName; }
+    public void setPharmacyName(String pharmacyName) { this.pharmacyName = pharmacyName; }
+    public String getPharmacyAddress() { return pharmacyAddress; }
+    public void setPharmacyAddress(String pharmacyAddress) { this.pharmacyAddress = pharmacyAddress; }
+    public String getPharmacyPhone() { return pharmacyPhone; }
+    public void setPharmacyPhone(String pharmacyPhone) { this.pharmacyPhone = pharmacyPhone; }
+    public String getNurseRemark() { return nurseRemark; }
+    public void setNurseRemark(String nurseRemark) { this.nurseRemark = nurseRemark; }
+    public String getPatientRemark() { return patientRemark; }
+    public void setPatientRemark(String patientRemark) { this.patientRemark = patientRemark; }
+    public Boolean getIsEmergency() { return isEmergency; }
+    public void setIsEmergency(Boolean isEmergency) { this.isEmergency = isEmergency; }
+    public Boolean getIsControlledSubstance() { return isControlledSubstance; }
+    public void setIsControlledSubstance(Boolean isControlledSubstance) { this.isControlledSubstance = isControlledSubstance; }
+    public String getControlledSubstanceClass() { return controlledSubstanceClass; }
+    public void setControlledSubstanceClass(String controlledSubstanceClass) { this.controlledSubstanceClass = controlledSubstanceClass; }
     
     public boolean isActive() {
         return status == PrescriptionStatus.PRESCRIBED || status == PrescriptionStatus.DISPENSED;
@@ -129,19 +193,20 @@ public class Prescription extends BaseEntity {
     }
     
     public boolean canRefill() {
-        return refillsAllowed > refillsUsed && !isExpired();
+        return (refillsAllowed != null && refillsUsed != null) && (refillsAllowed > refillsUsed) && !isExpired();
     }
     
     public boolean isFullCourseCompleted() {
-        return dispensedQuantity >= prescribedQuantity;
+        return (dispensedQuantity != null && prescribedQuantity != null) && (dispensedQuantity >= prescribedQuantity);
     }
     
     public int getRemainingRefills() {
+        if (refillsAllowed == null || refillsUsed == null) return 0;
         return refillsAllowed - refillsUsed;
     }
     
     public double getProgressPercentage() {
-        if (prescribedQuantity == 0) return 0.0;
+        if (prescribedQuantity == null || prescribedQuantity == 0 || dispensedQuantity == null) return 0.0;
         return (double) dispensedQuantity / prescribedQuantity * 100;
     }
     

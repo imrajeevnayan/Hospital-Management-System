@@ -2,8 +2,8 @@ package com.hms.service;
 
 import com.hms.entity.MedicalRecord;
 import com.hms.repository.MedicalRecordRepository;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -12,12 +12,16 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+
 @Service
-@RequiredArgsConstructor
-@Slf4j
 public class MedicalRecordService {
     
+    private static final Logger log = LoggerFactory.getLogger(MedicalRecordService.class);
     private final MedicalRecordRepository medicalRecordRepository;
+
+    public MedicalRecordService(MedicalRecordRepository medicalRecordRepository) {
+        this.medicalRecordRepository = medicalRecordRepository;
+    }
     
     @Transactional(readOnly = true)
     public Optional<MedicalRecord> findById(Long id) {
@@ -31,10 +35,7 @@ public class MedicalRecordService {
     
     @Transactional(readOnly = true)
     public List<MedicalRecord> getRecentMedicalRecordsForPatient(Long patientId, int limit) {
-        return medicalRecordRepository.findRecentMedicalRecordsByPatientId(patientId, LocalDate.now().minusMonths(6))
-                .stream()
-                .limit(limit)
-                .toList();
+        return medicalRecordRepository.findLatestRecordsByPatient(patientId, LocalDate.now(), limit);
     }
     
     @Transactional(readOnly = true)
@@ -43,27 +44,7 @@ public class MedicalRecordService {
     }
     
     @Transactional
-    public MedicalRecord createMedicalRecord(MedicalRecord medicalRecord) {
-        return medicalRecordRepository.save(medicalRecord);
-    }
-    
-    @Transactional
-    public MedicalRecord updateMedicalRecord(MedicalRecord medicalRecord) {
-        return medicalRecordRepository.save(medicalRecord);
-    }
-    
-    @Transactional
-    public void deleteMedicalRecord(Long id) {
-        medicalRecordRepository.deleteById(id);
-    }
-    
-    @Transactional(readOnly = true)
-    public List<MedicalRecord> getMedicalRecordsByRecordType(Long patientId, MedicalRecord.RecordType recordType) {
-        return medicalRecordRepository.findMedicalRecordsByPatientAndType(patientId, recordType);
-    }
-    
-    @Transactional(readOnly = true)
-    public Page<MedicalRecord> searchMedicalRecords(Long patientId, String search, Pageable pageable) {
-        return medicalRecordRepository.searchMedicalRecords(patientId, search, pageable);
+    public MedicalRecord createMedicalRecord(MedicalRecord record) {
+        return medicalRecordRepository.save(record);
     }
 }

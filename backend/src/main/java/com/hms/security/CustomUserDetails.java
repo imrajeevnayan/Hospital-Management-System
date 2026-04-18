@@ -2,7 +2,6 @@ package com.hms.security;
 
 import com.hms.entity.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -11,7 +10,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
-@Data
+
 public class CustomUserDetails implements UserDetails {
     
     private Long id;
@@ -40,8 +39,8 @@ public class CustomUserDetails implements UserDetails {
                 user.getEmail(),
                 user.getPassword(),
                 authorities,
-                user.getIsActive(),
-                user.getIsVerified(),
+                user.getIsActive() != null ? user.getIsActive() : true,
+                user.getIsVerified() != null ? user.getIsVerified() : false,
                 user.getRole(),
                 user.getSpecialization(),
                 user.getLicenseNumber()
@@ -63,6 +62,12 @@ public class CustomUserDetails implements UserDetails {
         this.specialization = specialization;
         this.licenseNumber = licenseNumber;
     }
+
+    public Long getId() { return id; }
+    public String getFirstName() { return firstName; }
+    public String getLastName() { return lastName; }
+    public String getEmail() { return email; }
+    public User.UserRole getRole() { return role; }
     
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

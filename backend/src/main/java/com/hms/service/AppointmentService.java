@@ -4,8 +4,8 @@ import com.hms.entity.Appointment;
 import com.hms.entity.Patient;
 import com.hms.entity.User;
 import com.hms.repository.AppointmentRepository;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -16,13 +16,18 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
+
 @Service
-@RequiredArgsConstructor
-@Slf4j
 public class AppointmentService {
     
+    private static final Logger log = LoggerFactory.getLogger(AppointmentService.class);
     private final AppointmentRepository appointmentRepository;
     private final UserService userService;
+
+    public AppointmentService(AppointmentRepository appointmentRepository, UserService userService) {
+        this.appointmentRepository = appointmentRepository;
+        this.userService = userService;
+    }
     
     @Transactional(readOnly = true)
     public Optional<Appointment> findById(Long id) {
@@ -77,17 +82,16 @@ public class AppointmentService {
             throw new RuntimeException("Doctor is not available on the selected date");
         }
         
-        Appointment appointment = Appointment.builder()
-                .patient(patient)
-                .doctor(doctor)
-                .appointmentDate(appointmentDate)
-                .appointmentTime(appointmentTime)
-                .durationMinutes(30)
-                .status(Appointment.AppointmentStatus.SCHEDULED)
-                .reason(reason)
-                .notes(notes)
-                .isEmergency(false)
-                .build();
+        Appointment appointment = new Appointment();
+        appointment.setPatient(patient);
+        appointment.setDoctor(doctor);
+        appointment.setAppointmentDate(appointmentDate);
+        appointment.setAppointmentTime(appointmentTime);
+        appointment.setDurationMinutes(30);
+        appointment.setStatus(Appointment.AppointmentStatus.SCHEDULED);
+        appointment.setReason(reason);
+        appointment.setNotes(notes);
+        appointment.setIsEmergency(false);
         
         return appointmentRepository.save(appointment);
     }
