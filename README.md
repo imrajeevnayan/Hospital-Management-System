@@ -1,374 +1,155 @@
-# Hospital Management System (Spring Boot + Thymeleaf)
+# 🏥 HealthSync HMS - Advanced Hospital Management System
 
-A comprehensive, full-stack Hospital Management System built with **Spring Boot** and **Thymeleaf** templates, providing complete healthcare management functionality.
+<div align="center">
 
-![Hospital Management System Logo]([https://www.google.com/imgres?q=hospital%20Management%20System&imgurl=https%3A%2F%2Fwww.maxaix.com%2Fblog%2Fwp-content%2Fuploads%2F2024%2F03%2FHospital-Management-System-development.jpg&imgrefurl=https%3A%2F%2Fwww.maxaix.com%2Fblog%2Fhospital-management-system-development%2F&docid=EL7RGrL5gEHyHM&tbnid=0BNze9-sQCA95M&vet=12ahUKEwi8hNupl_yQAxU8bfUHHetoNwMQM3oECBUQAA..i&w=1000&h=600&hcb=2&ved=2ahUKEwi8hNupl_yQAxU8bfUHHetoNwMQM3oECBUQAA])
+![HealthSync Banner](https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80)
 
-## 🏗️ Architecture Overview
+[![GitHub stars](https://img.shields.io/github/stars/imrajeevnayan/Hospital-Management-System?style=for-the-badge&color=007BFF)](https://github.com/imrajeevnayan/Hospital-Management-System/stargazers)
+[![GitHub forks](https://img.shields.io/github/forks/imrajeevnayan/Hospital-Management-System?style=for-the-badge&color=6C757D)](https://github.com/imrajeevnayan/Hospital-Management-System/network/members)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
+[![Spring Boot](https://img.shields.io/badge/Spring_Boot-3.2.0-6DB33F?style=for-the-badge&logo=spring-boot)](https://spring.io/projects/spring-boot)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-Modern_UI-38B2AC?style=for-the-badge&logo=tailwind-css)](https://tailwindcss.com)
 
-### Backend (Spring Boot)
-- **Framework**: Spring Boot 3.2.0
-- **Database**: MySQL 8.0
-- **ORM**: Spring Data JPA
-- **Security**: Spring Security
-- **Authentication**: JWT-based (configurable)
-- **View Engine**: Thymeleaf
-- **Build Tool**: Maven
+**Modernizing Healthcare Management with a Decoupled, Robust, and User-Centric Digital Ecosystem.**
 
-### Frontend (Thymeleaf Templates)
-- **Styling**: Tailwind CSS
-- **Responsive Design**: Mobile-first approach
-- **UI Components**: Custom components with Tailwind
-- **Interactive Elements**: JavaScript for dynamic functionality
+[Explore Documentation](#-getting-started) • [View Features](#-key-features) • [Report Bug](https://github.com/imrajeevnayan/Hospital-Management-System/issues) • [Request Feature](https://github.com/imrajeevnayan/Hospital-Management-System/issues)
 
-![Spring Boot HMS Architecture Diagram](https://javatechonline.com/wp-content/uploads/2025/04/hospital-management-system-architecture-diagram.png)
-
-## 🎯 Features
-
-### Multi-Role Support
-- **Patients**: Book appointments, view medical records, manage prescriptions, pay bills  
-  ![Patient Icon](https://thenounproject.com/browse/icons/term/patient-centered-care/icon-1234567-patient/)
-- **Doctors**: Manage patient records, write prescriptions, schedule appointments  
-  ![Doctor Icon](https://www.flaticon.com/free-icon/doctor_1234568?term=doctor)
-- **Nurses**: Monitor patients, manage medications, coordinate care  
-  ![Nurse Icon](https://www.vecteezy.com/free-vector/medical-staff-icon/nurse-1234569)
-- **Administrators**: Manage users, departments, system operations, analytics  
-  ![Admin Icon](https://www.shutterstock.com/image-vector/admin-icon-healthcare-1234570)
-
-### Core Modules
-1. **Authentication & Authorization**
-    - Role-based access control
-    - Secure login/logout
-    - Password management
-    - Session management
-
-2. **Patient Management**
-    - Complete patient profiles
-    - Medical history tracking
-    - Emergency contacts
-    - Insurance information
-
-3. **Appointment System**
-    - Smart scheduling
-    - Doctor availability management
-    - Appointment status tracking
-    - Automated reminders
-
-4. **Medical Records**
-    - Comprehensive medical history
-    - Diagnosis tracking
-    - Treatment plans
-    - Progress notes
-
-5. **Prescription Management**
-    - Electronic prescriptions
-    - Medication tracking
-    - Refill management
-    - Drug interaction warnings
-
-6. **Billing & Insurance**
-    - Automated bill generation
-    - Insurance processing
-    - Payment tracking
-    - Financial reporting
-
-7. **Department Management**
-    - Hospital organization
-    - Bed management
-    - Equipment tracking
-    - Staff assignment
-
-## 🗄️ Database Schema
-
-### Core Entities
-- **Users**: Multi-role user system (Patient, Doctor, Nurse, Admin)
-- **Patients**: Extended patient information
-- **Departments**: Hospital organization units
-- **Appointments**: Scheduling and management
-- **Medical Records**: Patient health information
-- **Prescriptions**: Medication management
-- **Bills**: Financial transactions
-
-### Key Relationships
-- User ↔ Patient (One-to-One)
-- Doctor ↔ Appointments (One-to-Many)
-- Patient ↔ Medical Records (One-to-Many)
-- Patient ↔ Prescriptions (One-to-Many)
-- Patient ↔ Bills (One-to-Many)
-- Department ↔ Staff (One-to-Many)
-
-![Hospital ER Diagram](https://creately.com/static/assets/examples/er-diagram-hospital-management-system.png)
-
-## 📱 Screenshots
-Without manually taking screenshots of your HTML pages (e.g., `admin-dashboard.html`, `doctor-dashboard.html`, etc.), you can embed representative placeholder images in the README using services like [via.placeholder.com](https://via.placeholder.com/) or [LoremFlickr](https://loremflickr.com/). These generate dynamic, themed images on-the-fly based on text or tags—no uploads or tools needed. They render directly in GitHub Markdown.
-
-For a more polished look, replace placeholders with free stock UI mockups from sites like Freepik or Dribbble (download PNGs and upload to your repo for relative links like `![Alt](images/admin-dashboard.png)`). Here's an example integration using placeholders:
-
-### Index.html (Homepage)
-![Index Homepage UI](https://via.placeholder.com/1200x600/007BFF/FFFFFF?text=Hospital+Index+Homepage)
-
-### Login.html
-![Login Page UI](https://via.placeholder.com/1200x700/10B981/FFFFFF?text=Hospital+Login+Page)
-
-### Register.html (Register Page)
-![Register Page UI](https://via.placeholder.com/1200x700/3B82F6/FFFFFF?text=Hospital+Register+Form)
-
-### Admin-Dashboard.html
-![Admin Dashboard UI](https://via.placeholder.com/1200x700/8B5CF6/FFFFFF?text=Admin+Dashboard)
-
-### Doctor-Dashboard.html
-![Doctor Dashboard UI](https://via.placeholder.com/1200x700/F59E0B/FFFFFF?text=Doctor+Dashboard)
-
-### Nurse-Dashboard.html
-![Nurse Dashboard UI](https://via.placeholder.com/1200x700/EF4444/FFFFFF?text=Nurse+Dashboard)
-
-### Patient-Dashboard.html
-![Patient Dashboard UI](https://via.placeholder.com/1200x700/06B6D4/FFFFFF?text=Patient+Dashboard)
-
-**Pro Tip**: Customize placeholders with colors (e.g., hex codes for healthcare blue tones) and text. For themed images, use `https://loremflickr.com/1200/700/dashboard,medical,hospital` (randomizes relevant photos). To make permanent, download and commit to `/images/` folder in your repo.
-
-
-## 👥 Demo Accounts
-
-| Role | Email | Password | Description |
-|------|-------|----------|-------------|
-| **Patient** | patient@hms.com | password | Book appointments, view records |
-| **Doctor** | doctor@hms.com | password | Manage patients, write prescriptions |
-| **Nurse** | nurse@hms.com | password | Monitor patients, dispense medications |
-| **Admin** | admin@hms.com | password | System administration, user management |
-
-## 📁 Project Structure
-
-```
-/HMS/
-├── backend/               # Spring Boot REST API
-│   ├── src/main/java/     # Java source code
-│   ├── src/main/resources/ # Configuration & static assets
-│   └── pom.xml            # Maven configuration
-├── frontend/              # Modern React/Vite UI
-│   ├── public/            # Static assets
-│   ├── src/               # React components & logic
-│   └── package.json       # Node dependencies
-└── README.md              # Project documentation
-```
-
-## 🚀 Quick Start
-
-### 1. Backend Setup (Spring Boot)
-```bash
-cd backend
-mvn clean spring-boot:run
-```
-
-### 2. Frontend Setup (React/Vite)
-```bash
-cd frontend
-npm install
-npm run dev
-```
-
-
-## 🔧 Configuration
-
-### Application Properties
-```yaml
-# Database Configuration
-spring:
-  datasource:
-    url: jdbc:mysql://localhost:3306/hms
-    username: hms_user
-    password: hms_password
-
-# JPA Configuration
-jpa:
-  hibernate:
-    ddl-auto: create-drop  # Creates schema automatically
-  show-sql: true
-  properties:
-    hibernate:
-      dialect: org.hibernate.dialect.MySQL8Dialect
-
-# Security Configuration
-hms:
-  security:
-    jwt:
-      secret: mySecretKey123456789
-      expiration: 86400  # 24 hours
-```
-
-### Security Roles
-- `ROLE_PATIENT`: Patient portal access
-- `ROLE_DOCTOR`: Clinical workflow access
-- `ROLE_NURSE`: Care coordination access
-- `ROLE_ADMIN`: Full system access
-
-## 🎨 Frontend Features
-
-### Design System
-- **CSS Framework**: Tailwind CSS
-- **Color Scheme**: Healthcare-appropriate blue tones
-- **Typography**: Clean, readable fonts
-- **Components**: Reusable UI components
-- **Responsive**: Mobile-first design
-
-### User Interface
-- **Role-based Dashboards**: Customized for each user type
-- **Navigation**: Intuitive sidebar navigation
-- **Forms**: Interactive forms with validation
-- **Data Tables**: Sortable, searchable tables
-- **Charts**: Visual data representation
-
-![Responsive Hospital Dashboard UI](https://cdn.dribbble.com/userupload/12578692/file/original-abc123-dashboard-hospital-status-ui.jpg)
-
-## 🔒 Security Features
-
-### Authentication
-- Form-based login
-- Session management
-- Password encryption (BCrypt)
-- Remember me functionality
-
-### Authorization
-- Role-based access control
-- Method-level security
-- Route protection
-- CSRF protection
-
-### Data Security
-- SQL injection prevention
-- XSS protection
-- Input validation
-- Secure session handling
-
-## 📊 API Endpoints
-
-### Authentication
-- `POST /hms/login` - User authentication
-- `GET /hms/logout` - User logout
-
-### Patient Portal
-- `GET /hms/patient/dashboard` - Patient dashboard
-- `GET /hms/patient/appointments` - Patient appointments
-- `GET /hms/patient/medical-records` - Medical records
-- `GET /hms/patient/prescriptions` - Prescriptions
-- `GET /hms/patient/bills` - Billing information
-- `POST /hms/patient/book-appointment` - Book appointment
-
-### Doctor Portal
-- `GET /hms/doctor/dashboard` - Doctor dashboard
-- `GET /hms/doctor/appointments` - Doctor appointments
-- `GET /hms/doctor/patients` - Doctor's patients
-- `POST /hms/doctor/medical-records` - Create medical record
-- `POST /hms/doctor/prescriptions` - Write prescription
-
-### Admin Portal
-- `GET /hms/admin/dashboard` - Admin dashboard
-- `GET /hms/admin/users` - User management
-- `GET /hms/admin/departments` - Department management
-- `GET /hms/admin/reports` - System reports
-
-## 🧪 Testing
-
-### Demo Data
-The application includes comprehensive demo data:
-- Sample users for all roles
-- Mock patient records
-- Sample appointments
-- Test prescriptions
-- Demo billing data
-
-### Sample Queries
-```sql
--- View all patients
-SELECT u.first_name, u.last_name, u.email, p.patient_id
-FROM users u 
-JOIN patients p ON u.id = p.user_id 
-WHERE u.role = 'PATIENT';
-
--- View today's appointments
-SELECT a.*, dp.first_name as doctor_name, pt.first_name as patient_name
-FROM appointments a
-JOIN users dp ON a.doctor_id = dp.id
-JOIN users pt ON a.patient_id = pt.id
-WHERE a.appointment_date = CURDATE();
-```
-
-## 🚀 Deployment
-
-### Development
-```bash
-# Run with hot reload
-mvn spring-boot:run
-```
-
-### Production
-```bash
-# Create production build
-mvn clean package -Pprod
-
-# Run JAR file
-java -jar target/hms-1.0.0.jar
-```
-
-### Environment Variables
-```bash
-# Database
-DB_URL=jdbc:mysql://localhost:3306/hms
-DB_USERNAME=hms_user
-DB_PASSWORD=hms_password
-
-# Security
-JWT_SECRET=your-secret-key
-JWT_EXPIRATION=86400
-
-# Mail
-MAIL_HOST=smtp.gmail.com
-MAIL_USERNAME=your-email@gmail.com
-MAIL_PASSWORD=your-app-password
-```
-
-## 🔄 Development Roadmap
-
-### Current Features ✅
-- [x] Multi-role authentication
-- [x] Patient management
-- [x] Appointment scheduling
-- [x] Medical records
-- [x] Prescription management
-- [x] Billing system
-- [x] Department management
-- [x] Role-based dashboards
-- [x] Responsive design
-- [x] Demo data
-
-### Future Enhancements 📋
-- [ ] Real-time notifications
-- [ ] Video consultations
-- [ ] Advanced analytics
-- [ ] Mobile app integration
-- [ ] AI-powered diagnostics
-- [ ] Electronic health records
-- [ ] Laboratory integration
-- [ ] Pharmacy management
-- [ ] Insurance verification
-- [ ] Audit logging
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Add tests if applicable
-5. Submit a pull request
-
-## 📝 License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
-
-## 👨‍💻 Author
-
-**RAJEEV NAYAN** - *Hospital Management System Development*
+</div>
 
 ---
 
-**🏥 Hospital Management System - Streamlining Healthcare Operations**
+## 🌟 Introduction
+
+**HealthSync HMS** is a next-generation Hospital Management System designed to bridge the gap between healthcare providers and patients. Built with a decoupled architecture, it features a high-performance **Spring Boot API** and a stunning, responsive **Tailwind CSS Frontend**. 
+
+Whether you are a doctor managing appointments or a patient seeking care, HealthSync provides a seamless, secure, and intuitive experience.
+
+---
+
+## 🚀 Key Features
+
+### 👨‍⚕️ For Doctors
+- **Smart Dashboard**: Real-time overview of appointments and patient status.
+- **Digital Prescriptions**: Generate and manage electronic prescriptions instantly.
+- **Medical History**: Access comprehensive patient records at your fingertips.
+
+### 🤒 For Patients
+- **Easy Booking**: Schedule appointments with specialized doctors in seconds.
+- **Personal Records**: Secure access to medical history, bills, and prescriptions.
+- **Payment Portal**: Intuitive billing and insurance tracking.
+
+### 🛡️ For Administrators
+- **User Management**: Control roles and permissions across the entire system.
+- **Department Control**: Organize hospital units and staff assignments efficiently.
+- **System Analytics**: Gain insights into hospital operations and financial health.
+
+---
+
+## 🛠️ Technology Stack
+
+| Architecture | Technologies |
+| :--- | :--- |
+| **Backend** | Spring Boot 3.2, Spring Security (JWT), Spring Data JPA, MySQL 8.0 |
+| **Frontend** | Vanilla JavaScript, Tailwind CSS (CDN), Google Fonts (Inter) |
+| **Deployment** | Maven, GitHub Actions, Docker (Ready) |
+| **Design** | Glassmorphism, Premium Color Palette, Responsive Layouts |
+
+---
+
+## 📁 Project Structure
+
+```bash
+Hospital-Management-System/
+├── 📂 backend         # Spring Boot Core (Java, REST API, Security)
+│   ├── src/           # Controller, Service, Repository, Entity
+│   └── pom.xml        # Maven Dependencies
+├── 📂 frontend        # Modern UI (HTML, CSS, JavaScript)
+│   ├── public/        # Static assets and Fragments
+│   └── index.html     # Entry Point
+└── 📄 README.md       # Project Documentation
+```
+
+---
+
+## 🏁 Getting Started
+
+Follow these simple steps to get your own instance of HealthSync HMS running locally.
+
+### 📋 Prerequisites
+*   **Java 17+** (JDK)
+*   **MySQL Server** (Running)
+*   **Maven** (Optional, `./mvnw` included)
+
+### 1️⃣ Database Setup
+Create a database named `hms` and configure your credentials in `backend/src/main/resources/application.yml`:
+```yaml
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/hms
+    username: your_username
+    password: your_password
+```
+
+### 2️⃣ Run Backend
+```bash
+cd backend
+./mvnw spring-boot:run
+```
+
+### 3️⃣ Launch Frontend
+Since the frontend is built with ultra-modern static technologies, simply open the `frontend/index.html` in your favorite browser. No build steps required!
+
+---
+
+## 🎨 User Interface Preview
+
+<div align="center">
+
+| Admin Dashboard | Patient Portal |
+| :---: | :---: |
+| ![Admin](https://via.placeholder.com/400x250/007BFF/FFFFFF?text=Admin+Dashboard+UI) | ![Patient](https://via.placeholder.com/400x250/10B981/FFFFFF?text=Patient+Portal+UI) |
+
+| Doctor View | Login Page |
+| :---: | :---: |
+| ![Doctor](https://via.placeholder.com/400x250/F59E0B/FFFFFF?text=Doctor+Interface) | ![Login](https://via.placeholder.com/400x250/3B82F6/FFFFFF?text=Secure+Login+Page) |
+
+</div>
+
+---
+
+## 🤝 Contributing
+
+Contributions make the open-source community an amazing place!
+1.  **Fork** the Project
+2.  **Create** your Feature Branch (`git checkout -b feature/AmazingFeature`)
+3.  **Commit** your Changes (`git commit -m 'Add some AmazingFeature'`)
+4.  **Push** to the Branch (`git push origin feature/AmazingFeature`)
+5.  **Open** a Pull Request
+
+---
+
+## 📄 License
+
+Distributed under the **MIT License**. See `LICENSE` for more information.
+
+---
+
+## 👨‍💻 Developed By
+
+**[Rajeev Nayan](https://github.com/imrajeevnayan)**
+*Passionate Full-Stack Developer & UI Enthusiast*
+
+---
+
+<div align="center">
+
+**Hospital Management System Development** • **Spring Boot API** • **Tailwind CSS UI**
+
+[Back To Top](#-healthsync-hms---advanced-hospital-management-system)
+
+</div>
+
+<!-- SEO Tags (Hidden) -->
+<!-- 
+Keywords: Hospital Management System, Spring Boot Hospital App, React Hospital UI, Tailwind CSS Medical Dashboard, HMS Java, Healthcare Management Software, Open Source HMS, Medical Records System, Doctor Appointment Booking System.
+-->
