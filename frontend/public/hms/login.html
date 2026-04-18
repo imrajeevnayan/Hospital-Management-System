@@ -65,12 +65,12 @@
                     <p class="text-slate-500">Sign in to your clinical workstation.</p>
                 </div>
 
-                <form class="space-y-6" id="loginForm">
+                <form class="space-y-6" id="loginForm" action="/login" method="POST">
                     <div class="space-y-1.5">
                         <label class="text-[10px] font-bold text-slate-400 uppercase tracking-widest ml-1">Work Email</label>
                         <div class="relative group">
                             <i data-lucide="mail" class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-300 group-focus-within:text-blue-500 transition-colors"></i>
-                            <input type="email" class="input-premium pl-12" placeholder="name@hospital.com" required>
+                            <input type="email" name="username" class="input-premium pl-12" placeholder="name@hospital.com" required>
                         </div>
                     </div>
 
@@ -81,13 +81,13 @@
                         </div>
                         <div class="relative group">
                             <i data-lucide="key-round" class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-300 group-focus-within:text-blue-500 transition-colors"></i>
-                            <input type="password" class="input-premium pl-12" placeholder="••••••••" required>
+                            <input type="password" name="password" class="input-premium pl-12" placeholder="••••••••" required>
                         </div>
                     </div>
 
                     <div class="flex items-center justify-between py-2">
                         <div class="flex items-center gap-2">
-                            <input type="checkbox" id="remember" class="w-4 h-4 rounded border-slate-200 text-blue-600 focus:ring-blue-500">
+                            <input type="checkbox" name="remember-me" id="remember" class="w-4 h-4 rounded border-slate-200 text-blue-600 focus:ring-blue-500">
                             <label for="remember" class="text-xs font-semibold text-slate-500">Keep session active</label>
                         </div>
                     </div>
@@ -108,24 +108,28 @@
                             <span>Google</span>
                         </button>
                         <button type="button" class="flex items-center justify-center gap-2 py-3 px-4 rounded-2xl border border-slate-100 font-bold text-sm text-slate-600 hover:bg-slate-50 transition-all">
-                             <img src="https://www.svgrepo.com/show/303114/apple-black.svg" class="w-4 h-4" alt="Apple">
-                            <span>Apple Identity</span>
+                             <img src="https://www.svgrepo.com/show/303114/apple-black.svg" class="w-4 h-4" alt="Apple Identity">
+                            <span>Apple</span>
                         </button>
                     </div>
                 </form>
 
                 <p class="mt-12 text-center text-sm font-medium text-slate-500">
                     Don't have clinical access? 
-                    <a href="/hms/register.html" class="text-blue-600 font-black hover:underline">Request Account</a>
+                    <a href="/hms/register.html" class="text-blue-600 font-black hover:underline" id="regLink">Request Account</a>
                 </p>
             </div>
         </div>
     </div>
 
-    <script>
+    <script th:inline="javascript">
         lucide.createIcons();
-        document.getElementById('loginForm').addEventListener('submit', (e) => {
+        const loginForm = document.getElementById('loginForm');
+        
+        loginForm.addEventListener('submit', (e) => {
+            if (loginForm.dataset.submitting) return;
             e.preventDefault();
+            
             const btn = e.target.querySelector('button[type="submit"]');
             
             // Premium Auth State
@@ -138,10 +142,11 @@
                 <span>Verifying Credentials...</span>
             `;
 
-            // Simulate Auth Verification
+            // Simulate Auth Verification for UI feel, then submit
             setTimeout(() => {
-                window.location.href = '/dashboard';
-            }, 1200);
+                loginForm.dataset.submitting = "true";
+                loginForm.submit();
+            }, 800);
         });
     </script>
 </body>

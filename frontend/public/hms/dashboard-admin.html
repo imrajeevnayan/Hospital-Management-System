@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{hms/fragments/head :: head('Admin Dashboard')}"></head>
+<head th:replace="~{fragments/head :: head('Admin Dashboard')}"></head>
 <body class="bg-slate-50/50">
-    <header th:replace="~{hms/fragments/navbar :: navbar}"></header>
+    <header th:replace="~{fragments/navbar :: navbar}"></header>
     
     <div class="mx-auto flex max-w-[1600px]">
-        <div th:replace="~{hms/fragments/sidebar :: sidebar('dashboard', 'ADMIN')}"></div>
+        <div th:replace="~{fragments/sidebar :: sidebar('dashboard', 'ADMIN')}"></div>
         
         <main class="min-h-[calc(100vh-4rem)] w-full p-6 pt-8 lg:ml-72 lg:p-10">
             <!-- Header Section -->
@@ -15,7 +15,7 @@
                         <i data-lucide="shield-check" class="w-3 h-3"></i>
                         <span>Admin Terminal / Global Overview</span>
                     </div>
-                    <h1 class="text-4xl font-extrabold tracking-tight text-slate-900">Hospital Command <span class="text-blue-600">Center</span></h1>
+                    <h1 class="text-4xl font-extrabold tracking-tight text-slate-900">Welcome, <span class="text-blue-600" th:text="${#authentication.principal.firstName} ?: 'Admin'">Admin</span></h1>
                     <p class="text-slate-500 font-medium">System is <span class="text-emerald-500 font-bold">Optimal</span>. No critical outages reported.</p>
                 </div>
                 <div class="flex items-center gap-3">

@@ -76,28 +76,33 @@
                     <p class="text-slate-500 mt-2">Already have an account? <a href="/hms/login.html" class="text-blue-600 font-bold hover:underline">Sign In</a></p>
                 </div>
 
-                <form class="space-y-5" id="registerForm">
+                <form class="space-y-5" id="registerForm" action="/register" method="POST">
                     <div class="grid grid-cols-2 gap-4">
                         <div class="space-y-1.5">
-                            <label class="text-[10px] font-bold text-slate-400 uppercase tracking-widest ml-1">Full Name</label>
-                            <input type="text" class="input-premium" placeholder="John" required>
+                            <label class="text-[10px] font-bold text-slate-400 uppercase tracking-widest ml-1">First Name</label>
+                            <input type="text" name="firstName" class="input-premium" placeholder="John" required>
                         </div>
                         <div class="space-y-1.5">
                             <label class="text-[10px] font-bold text-slate-400 uppercase tracking-widest ml-1">Portal Role</label>
-                            <select class="input-premium appearance-none text-slate-700 font-bold">
-                                <option>PATIENT</option>
-                                <option>DOCTOR</option>
-                                <option>NURSE</option>
-                                <option>ADMIN</option>
+                            <select name="role" class="input-premium appearance-none text-slate-700 font-bold">
+                                <option value="PATIENT">PATIENT</option>
+                                <option value="DOCTOR">DOCTOR</option>
+                                <option value="NURSE">NURSE</option>
+                                <option value="ADMIN">ADMIN</option>
                             </select>
                         </div>
+                    </div>
+
+                    <div class="space-y-1.5">
+                        <label class="text-[10px] font-bold text-slate-400 uppercase tracking-widest ml-1">Last Name</label>
+                        <input type="text" name="lastName" class="input-premium" placeholder="Doe" required>
                     </div>
 
                     <div class="space-y-1.5">
                         <label class="text-[10px] font-bold text-slate-400 uppercase tracking-widest ml-1">Email Registry</label>
                         <div class="relative">
                             <i data-lucide="mail" class="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-300"></i>
-                            <input type="email" class="input-premium pl-12" placeholder="name@hospital.com" required>
+                            <input type="email" name="email" class="input-premium pl-12" placeholder="name@hospital.com" required>
                         </div>
                     </div>
 
@@ -105,7 +110,7 @@
                         <label class="text-[10px] font-bold text-slate-400 uppercase tracking-widest ml-1">Secure Password</label>
                         <div class="relative">
                             <i data-lucide="lock" class="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-300"></i>
-                            <input type="password" class="input-premium pl-12" placeholder="••••••••" required>
+                            <input type="password" name="password" class="input-premium pl-12" placeholder="••••••••" required>
                         </div>
                     </div>
 

@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{hms/fragments/head :: head('Patient Registry')}"></head>
+<head th:replace="~{fragments/head :: head('Patient Registry')}"></head>
 <body class="bg-slate-50/50">
-    <header th:replace="~{hms/fragments/navbar :: navbar}"></header>
+    <header th:replace="~{fragments/navbar :: navbar}"></header>
     
     <div class="mx-auto flex max-w-[1600px]">
-        <div th:replace="~{hms/fragments/sidebar :: sidebar('patients', ${role})}"></div>
+        <div th:replace="~{fragments/sidebar :: sidebar('patients', ${role})}"></div>
         
         <main class="min-h-[calc(100vh-4rem)] w-full p-6 pt-8 lg:ml-72 lg:p-10">
             <!-- Header -->

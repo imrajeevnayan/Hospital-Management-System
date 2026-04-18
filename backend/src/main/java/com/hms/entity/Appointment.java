@@ -7,7 +7,10 @@ import java.time.LocalTime;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "appointments")
+@Table(name = "appointments", uniqueConstraints = {
+    @UniqueConstraint(name = "uk_doctor_time", columnNames = {"doctor_id", "appointment_date", "appointment_time"}),
+    @UniqueConstraint(name = "uk_patient_time", columnNames = {"patient_id", "appointment_date", "appointment_time"})
+})
 public class Appointment extends BaseEntity {
     
     @ManyToOne(fetch = FetchType.LAZY)

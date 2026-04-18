@@ -20,6 +20,16 @@ public class HomeController {
         return "index";
     }
 
+    @GetMapping("/hms/login.html")
+    public String login() {
+        return "login";
+    }
+
+    @GetMapping("/hms/register.html")
+    public String register() {
+        return "register";
+    }
+
     @GetMapping("/dashboard")
     public String dashboardRedirect(Authentication authentication) {
         if (authentication == null) {
@@ -43,17 +53,23 @@ public class HomeController {
     }
 
     // Serve other pages through template engine to process th: fragments
-    @GetMapping("/hms/appointments.html")
+    @GetMapping({"/hms/appointments.html", "/appointments"})
     public String appointments() { return "appointments"; }
 
-    @GetMapping("/hms/patients.html")
+    @GetMapping({"/hms/patients.html", "/patients"})
     public String patients() { return "patients"; }
 
-    @GetMapping("/hms/billing.html")
+    @GetMapping({"/hms/billing.html", "/billing"})
     public String billing() { return "billing"; }
 
-    @GetMapping("/hms/medical-records.html")
+    @GetMapping({"/hms/medical-records.html", "/medical-records"})
     public String medicalRecords() { return "medical-records"; }
+
+    @GetMapping({"/hms/prescriptions.html", "/prescriptions"})
+    public String prescriptions() { return "prescriptions"; }
+
+    @GetMapping({"/hms/admin/users.html", "/admin/users"})
+    public String adminUsers() { return "admin-users"; }
 
     @GetMapping("/hms/dashboard-doctor.html")
     public String doctorDashboard() { return "dashboard-doctor"; }

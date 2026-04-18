@@ -84,11 +84,52 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    // Modal Toggle
+    document.querySelectorAll('[data-modal-open]').forEach((btn) => {
+        btn.addEventListener('click', () => {
+            const modalId = btn.getAttribute('data-modal-open');
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+            }
+        });
+    });
+
+    document.querySelectorAll('[data-modal-close]').forEach((btn) => {
+        btn.addEventListener('click', () => {
+            const modal = btn.closest('[data-modal]');
+            if (modal) {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            }
+        });
+    });
+
     // Handle Form Toasts
     document.querySelectorAll('form[data-toast-message]').forEach((form) => {
         form.addEventListener('submit', (e) => {
             e.preventDefault();
             showToast(form.getAttribute('data-toast-message'));
+            const modal = form.closest('[data-modal]');
+            if (modal) {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            }
         });
     });
+
+    // Specific Appointment Form logic
+    const appointmentForm = document.getElementById('appointmentForm');
+    if (appointmentForm) {
+        appointmentForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            showToast('Appointment Request Sent!', 'success');
+            const modal = appointmentForm.closest('[data-modal]');
+            if (modal) {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            }
+        });
+    }
 });

@@ -25,12 +25,9 @@ import java.util.List;
 public class SecurityConfig {
     
     private final CustomUserDetailsService customUserDetailsService;
-    private final RestAuthenticationEntryPoint restAuthenticationEntryPoint;
     
-    public SecurityConfig(CustomUserDetailsService customUserDetailsService, 
-                         RestAuthenticationEntryPoint restAuthenticationEntryPoint) {
+    public SecurityConfig(CustomUserDetailsService customUserDetailsService) {
         this.customUserDetailsService = customUserDetailsService;
-        this.restAuthenticationEntryPoint = restAuthenticationEntryPoint;
     }
     
 
@@ -45,30 +42,47 @@ public class SecurityConfig {
         http
             .csrf(csrf -> csrf.disable())
             .cors(cors -> cors.configurationSource(corsConfigurationSource()))
-            .exceptionHandling(exceptions -> exceptions
-                .authenticationEntryPoint(restAuthenticationEntryPoint)
+            .headers(headers -> headers
+                .frameOptions(frame -> frame.disable())
             )
             .sessionManagement(session -> session
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
+            )
+            .formLogin(form -> form
+                .loginPage("/hms/login.html")
+                .loginProcessingUrl("/login")
+                .defaultSuccessUrl("/dashboard", true)
+                .failureHandler((req, res, exc) -> {
+                    System.err.println("CRITICAL: Authentication event failed for " + req.getParameter("username") + ". Cause: " + exc.getMessage());
+                    res.sendRedirect("/hms/login.html?error");
+                })
+                .permitAll()
+            )
+            .logout(logout -> logout
+                .logoutUrl("/logout")
+                .logoutSuccessUrl("/hms/login.html")
+                .permitAll()
             )
             .authorizeHttpRequests(authorize -> authorize
                 // Public routes
+                .requestMatchers("/h2-console", "/h2-console/**").permitAll()
                 .requestMatchers("/", "/login", "/login.html", "/register", "/index", "/index.html", "/register.html", "/forgot-password", "/reset-password").permitAll()
-                .requestMatchers(HttpMethod.GET, "/css/**", "/js/**", "/images/**", "/fonts/**", "/hms/assets/**", "/hms/index.html").permitAll()
+                .requestMatchers(HttpMethod.GET, "/css/**", "/js/**", "/images/**", "/fonts/**", "/hms/assets/**", "/hms/index.html", "/hms/login.html", "/hms/register.html").permitAll()
                 
                 // Specific Dashboard Protection (HTML files)
+                .requestMatchers("/dashboard").authenticated()
                 .requestMatchers("/hms/dashboard-admin.html").hasRole("ADMIN")
                 .requestMatchers("/hms/dashboard-doctor.html").hasRole("DOCTOR")
                 .requestMatchers("/hms/dashboard-patient.html").hasRole("PATIENT")
                 .requestMatchers("/hms/dashboard-nurse.html").hasRole("NURSE")
                 
                 // Content Pages Protection
-                .requestMatchers("/hms/patients.html").hasAnyRole("ADMIN", "DOCTOR", "NURSE")
-                .requestMatchers("/hms/appointments.html").hasAnyRole("ADMIN", "DOCTOR", "NURSE", "PATIENT")
-                .requestMatchers("/hms/billing.html").hasAnyRole("ADMIN", "PATIENT")
-                .requestMatchers("/hms/medical-records.html").hasAnyRole("ADMIN", "DOCTOR", "NURSE", "PATIENT")
-                .requestMatchers("/hms/prescriptions.html").hasAnyRole("ADMIN", "DOCTOR", "NURSE", "PATIENT")
-                .requestMatchers("/hms/admin-users.html").hasRole("ADMIN")
+                .requestMatchers("/patients", "/hms/patients.html").hasAnyRole("ADMIN", "DOCTOR", "NURSE")
+                .requestMatchers("/appointments", "/hms/appointments.html").hasAnyRole("ADMIN", "DOCTOR", "NURSE", "PATIENT")
+                .requestMatchers("/billing", "/hms/billing.html").hasAnyRole("ADMIN", "PATIENT")
+                .requestMatchers("/medical-records", "/hms/medical-records.html").hasAnyRole("ADMIN", "DOCTOR", "NURSE", "PATIENT")
+                .requestMatchers("/prescriptions", "/hms/prescriptions.html").hasAnyRole("ADMIN", "DOCTOR", "NURSE", "PATIENT")
+                .requestMatchers("/admin/users", "/hms/admin-users.html").hasRole("ADMIN")
 
                 // Admin API routes
                 .requestMatchers("/hms/admin/**").hasRole("ADMIN")

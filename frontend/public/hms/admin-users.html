@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{hms/fragments/head :: head(${pageTitle})}"></head>
+<head th:replace="~{fragments/head :: head(${pageTitle})}"></head>
 <body class="min-h-screen text-slate-900">
-  <header th:replace="~{hms/fragments/navbar :: navbar}"></header>
+  <header th:replace="~{fragments/navbar :: navbar}"></header>
   <div class="mx-auto flex max-w-[1600px]">
-    <div th:replace="~{hms/fragments/sidebar :: sidebar(${activeMenu}, ${role})}"></div>
+    <div th:replace="~{fragments/sidebar :: sidebar(${activeMenu}, ${role})}"></div>
     <main class="min-h-[calc(100vh-4rem)] w-full p-4 pt-6 lg:ml-72 lg:p-6">
       <section class="mb-6 flex flex-wrap items-start justify-between gap-4"><div><p class="text-sm text-slate-500">Home / Admin / Users</p><h1 class="mt-1 text-2xl font-bold tracking-tight">User Management</h1></div><button data-modal-open="user-modal" class="btn-primary">Add/Edit User</button></section>
       <section class="panel hms-shadow p-5">

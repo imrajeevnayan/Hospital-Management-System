@@ -1,22 +1,38 @@
--- Sample data for Hospital Management System (H2-compatible)
+-- Persistent Seed Data for PostgreSQL
 -- Password hash: BCrypt for 'password' -> $2a$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi
 
--- Insert sample users (roles: ADMIN, DOCTOR, NURSE, PATIENT)
-INSERT INTO users (first_name, last_name, email, password, phone_number, role, is_verified, is_active) VALUES
-('Admin', 'User', 'admin@hms.com', '$2a$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', '+1-555-0100', 'ADMIN', TRUE, TRUE),
-('Dr. John', 'Doe', 'doctor@hms.com', '$2a$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', '+1-555-0200', 'DOCTOR', TRUE, TRUE),
-('Nurse Jane', 'Smith', 'nurse@hms.com', '$2a$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', '+1-555-0300', 'NURSE', TRUE, TRUE),
-('Patient', 'Test', 'patient@hms.com', '$2a$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', '+1-555-0400', 'PATIENT', TRUE, TRUE);
+-- 1. Insert Hardcoded Staff (ADMIN, DOCTOR, NURSE)
+-- Using ON CONFLICT (email) DO NOTHING to ensure idempotence across restarts
+INSERT INTO users (first_name, last_name, email, password, phone_number, role, is_verified, is_active, is_deleted, login_attempts, created_at, updated_at) 
+VALUES
+('Admin', 'System', 'admin@hms.com', '$2a$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', '+1-555-0100', 'ADMIN', TRUE, TRUE, FALSE, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('Dr. John', 'Doe', 'doctor@hms.com', '$2a$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', '+1-555-0200', 'DOCTOR', TRUE, TRUE, FALSE, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('Nurse Jane', 'Smith', 'nurse@hms.com', '$2a$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', '+1-555-0300', 'NURSE', TRUE, TRUE, FALSE, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
+ON CONFLICT (email) DO NOTHING;
 
--- Insert sample departments
-INSERT INTO departments (department_name, description, location, total_beds, available_beds, is_active_department) VALUES
-('General Medicine', 'General medical care and consultations', 'Building A, Floor 2', 20, 18, TRUE),
-('Surgery', 'Surgical procedures and recovery', 'Building B, Floor 3', 15, 12, TRUE);
+-- 2. Insert Sample Patient (Optional, patients will register themselves)
+INSERT INTO users (first_name, last_name, email, password, phone_number, role, is_verified, is_active, is_deleted, login_attempts, created_at, updated_at) 
+VALUES
+('Patient', 'Test', 'patient@hms.com', '$2a$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', '+1-555-0400', 'PATIENT', TRUE, TRUE, FALSE, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
+ON CONFLICT (email) DO NOTHING;
 
--- Insert sample patient (links to user_id=4, doctor_id=2, department_id=1)
-INSERT INTO patients (user_id, primary_doctor_id, department_id, patient_id, blood_group, height_cm, weight_kg, is_active) VALUES
-(4, 2, 1, 'PAT001', 'O+', 175.50, 70.25, TRUE);
+-- 3. Insert Departments
+-- Using ON CONFLICT (id) DO NOTHING isn't possible here without IDs, so we use name if unique or just rely on manual management
+-- For simplicity in this env, we use simple inserts or check existence
+INSERT INTO departments (id, department_name, description, location, total_beds, available_beds, doctors_count, nurses_count, is_emergency_department, is_active_department, is_active, is_deleted)
+SELECT 1, 'General Medicine', 'General medical care and consultations', 'Building A, Floor 2', 20, 18, 5, 10, FALSE, TRUE, TRUE, FALSE
+WHERE NOT EXISTS (SELECT 1 FROM departments WHERE id = 1);
 
--- Insert sample appointment (links to patient_id=1, doctor_id=2; nurse_id NULL for now)
-INSERT INTO appointments (patient_id, doctor_id, nurse_id, appointment_date, appointment_time, duration_minutes, status, reason, is_emergency, is_active) VALUES
-(1, 2, NULL, '2025-11-10', '10:00:00', 30, 'SCHEDULED', 'Routine checkup', FALSE, TRUE);
+INSERT INTO departments (id, department_name, description, location, total_beds, available_beds, doctors_count, nurses_count, is_emergency_department, is_active_department, is_active, is_deleted)
+SELECT 2, 'Surgery', 'Surgical procedures and recovery', 'Building B, Floor 3', 15, 12, 8, 12, FALSE, TRUE, TRUE, FALSE
+WHERE NOT EXISTS (SELECT 1 FROM departments WHERE id = 2);
+
+-- 4. Sample Patient Profile (Links to patient@hms.com)
+INSERT INTO patients (id, user_id, patient_id, blood_group, marital_status, primary_doctor_id, department_id, follow_up_required, is_active, is_deleted)
+SELECT 1, (SELECT id FROM users WHERE email = 'patient@hms.com'), 'PAT001', 'O+', 'SINGLE', (SELECT id FROM users WHERE email = 'doctor@hms.com'), 1, FALSE, TRUE, FALSE
+WHERE NOT EXISTS (SELECT 1 FROM patients WHERE id = 1);
+
+-- 5. Sample Appointment
+INSERT INTO appointments (id, patient_id, doctor_id, appointment_date, appointment_time, status, reason, is_emergency, is_active, is_deleted)
+SELECT 1, 1, (SELECT id FROM users WHERE email = 'doctor@hms.com'), '2025-11-10', '10:00:00', 'SCHEDULED', 'Routine checkup', FALSE, TRUE, FALSE
+WHERE NOT EXISTS (SELECT 1 FROM appointments WHERE id = 1);

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
     
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CustomUserDetailsService.class);
     private final UserService userService;
 
     public CustomUserDetailsService(UserService userService) {
@@ -17,9 +18,14 @@ public class CustomUserDetailsService implements UserDetailsService {
     
     @Override
     public CustomUserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        log.info("Security verify trigger: attempting to load user identity [{}]", email);
         User user = userService.findByEmail(email)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + email));
+                .orElseThrow(() -> {
+                    log.warn("Security verify fail: identity [{}] not found in HMS registry", email);
+                    return new UsernameNotFoundException("User not found with email: " + email);
+                });
         
+        log.info("Security verify: identity [{}] verified, granted roles: {}", email, user.getAuthorities());
         return CustomUserDetails.create(user);
     }
     

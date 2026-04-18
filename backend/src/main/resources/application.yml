@@ -1,41 +1,31 @@
 spring:
-  config:
-    activate:
-      on-profile: dev  # Set to 'dev' profile, can be adjusted for different profiles (e.g., prod)
-
   application:
     name: hospital-management-system
 
   datasource:
-    url: jdbc:h2:mem:hmsdb  # In-memory H2 database
-    driver-class-name: org.h2.Driver
-    username: sa
-    password:  # No password by default for H2 in-memory database
+    url: jdbc:postgresql://localhost:5432/hms_db
+    driver-class-name: org.postgresql.Driver
+    username: postgres
+    password: password
     hikari:
       maximum-pool-size: 20
       minimum-idle: 5
       connection-timeout: 30000
 
-  h2:
-    console:
-      enabled: true  # Enables H2 Console access for development (URL: http://localhost:8080/h2-console)
-      path: /h2-console
-
   jpa:
     hibernate:
-      ddl-auto: create-drop  # Will drop tables on startup, recreate them (Use 'update' in production)
-    show-sql: true  # Show SQL queries in the console (good for debugging)
+      ddl-auto: update
+    show-sql: true
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.H2Dialect  # Correct dialect for H2
-        format_sql: true  # Formats the SQL queries for better readability
-    defer-datasource-initialization: true  # Defer initialization until after the datasource is set up (for more control)
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+    defer-datasource-initialization: true
 
   sql:
     init:
-      mode: always  # Always run schema and data SQL scripts
-      schema-locations: classpath:schema.sql  # Location of the schema file (create the schema structure)
-      data-locations: classpath:data.sql  # Location of the data file (populate data after schema)
+      mode: always
+      data-locations: classpath:data.sql
 
   thymeleaf:
     cache: false  # Disable Thymeleaf template caching during development
@@ -51,18 +41,17 @@ spring:
         jwt:
           issuer-uri: http://localhost:8080  # JWT issuer URI (ensure this matches your OAuth2 provider)
 
-# Mail Configuration
-spring.mail:
-  host: smtp.gmail.com
-  port: 587
-  username: your-email@gmail.com  # Add your Gmail username
-  password: your-app-password  # Add your Gmail App password
-  properties:
-    mail:
-      smtp:
-        auth: true
-        starttls:
-          enable: true
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: your-email@gmail.com  # Add your Gmail username
+    password: your-app-password  # Add your Gmail App password
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
 
 # Logging Configuration
 logging:

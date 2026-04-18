@@ -29,6 +29,9 @@ public abstract class BaseEntity {
     @Column(name = "is_deleted", nullable = false)
     protected Boolean isDeleted = false;
 
+    @Version
+    private Long version;
+
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
     public LocalDateTime getCreatedAt() { return createdAt; }
