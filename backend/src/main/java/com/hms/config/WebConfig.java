@@ -9,14 +9,14 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        // Link the /hms path to the external frontend directory
-        registry.addResourceHandler("/hms/**")
-                .addResourceLocations("file:d:/HMS/frontend/public/hms/")
+        // Link the /hms/assets path to the external frontend assets directory
+        registry.addResourceHandler("/hms/assets/**")
+                .addResourceLocations("file:d:/HMS/frontend/public/hms/assets/")
                 .setCachePeriod(0);
         
-        // Link root index to the frontend root index
-        registry.addResourceHandler("/index.html")
-                .addResourceLocations("file:d:/HMS/frontend/index.html")
+        // Root assets
+        registry.addResourceHandler("/assets/**")
+                .addResourceLocations("file:d:/HMS/frontend/public/hms/assets/")
                 .setCachePeriod(0);
     }
 }
