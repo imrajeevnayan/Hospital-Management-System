@@ -96,9 +96,40 @@ If you have Docker Desktop installed, you can skip the manual setup:
     *   Initialize the tables and start the API.
     *   Expose the API at `localhost:8080`.
 
+## 🛠️ API Architecture & Endpoints
+
+HealthSync HMS follows a headless architectural pattern where the backend serves as both a robust REST API and a powerful template engine for the frontend.
+
+### 🧠 Core System Routes
+| Method | Endpoint | Description |
+| :--- | :--- | :--- |
+| `GET` | `/` | Main Entry Landing Page |
+| `GET` | `/hms/login.html` | Secure Login Portal |
+| `GET` | `/hms/register.html` | New User Registration |
+| `POST` | `/register` | Registration Data Processor |
+| `GET` | `/dashboard` | Intelligent Role-based Redirector |
+
+### 🏥 Dashboard & Management Modules
+| Module | Endpoint | Access Level |
+| :--- | :--- | :--- |
+| **Admin Portal** | `/hms/dashboard-admin.html` | System Administrator |
+| **Doctor Portal** | `/hms/dashboard-doctor.html` | Medical Staff |
+| **Nurse Portal** | `/hms/dashboard-nurse.html` | Clinical Staff |
+| **Patient Hub** | `/hms/dashboard-patient.html` | Registered Patients |
+| **Registry** | `/hms/patients.html` | Clinical Staff / Admin |
+| **Billing** | `/hms/billing.html` | Admin / Patient |
+
+### ⚡ Patient REST API (`/hms/api/patient/*`)
+| Method | Endpoint | Description |
+| :--- | :--- | :--- |
+| `GET` | `/dashboard` | Fetch aggregated dashboard metrics |
+| `GET` | `/appointments` | List paginated patient appointments |
+| `POST` | `/appointments/book` | Book a new medical consultation |
+
 ---
 
 ## 👥 Default Login Credentials
+
 
 | Role | Username | Password |
 | :--- | :--- | :--- |
